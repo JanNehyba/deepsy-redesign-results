@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>DeePsy redesign — před / po</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, sans-serif; background: #0E3641; color: #fff; padding: 24px; }
+h1 { font-size: 28px; margin-bottom: 8px; }
+.subtitle { color: rgba(255,255,255,0.6); margin-bottom: 32px; font-size: 14px; }
+.compare {
+	background: #fff;
+	color: #2C2C2C;
+	border-radius: 12px;
+	padding: 24px;
+	margin-bottom: 32px;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.compare h2 { font-size: 20px; margin-bottom: 8px; color: #0FA9C6; }
+.compare .desc { color: #5B6E75; margin-bottom: 20px; font-size: 14px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.col { border: 1px solid #DDE6E8; border-radius: 8px; overflow: hidden; }
+.col-header {
+	background: #F7FAFB;
+	padding: 10px 16px;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	font-weight: 700;
+	border-bottom: 1px solid #DDE6E8;
+}
+.col-header.before { color: #B91C1C; }
+.col-header.after { color: #15803D; }
+img { display: block; width: 100%; height: auto; }
+.changes { background: #F7FAFB; padding: 16px; border-radius: 8px; margin-top: 16px; font-size: 14px; }
+.changes ul { padding-left: 20px; }
+.changes li { margin-bottom: 4px; }
+.footer { text-align: center; color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<h1>DeePsy — konzervativní vizuální cleanup</h1>
+<p class="subtitle">Před a po na 4 klíčových obrazovkách. Vše real-app, žádné mockupy. Lokální verze pro tvoji kontrolu.</p>
+
+<div class="compare">
+	<h2>1. Seznam klientů — /clients/list</h2>
+	<p class="desc">Modernizace hlavičky tabulky + SVG sort šipky.</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED (commit 795f29eb)</div>
+			<img src="before/10_clients_list.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO (commit 52391d40)</div>
+			<img src="after/10_clients_list.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Konkrétní změny:</strong>
+		<ul>
+			<li>Header KLIENT / E-MAIL / EPIZODY / UPOZORNĚNÍ: cyan + bílý uppercase → světlý bg + tlumený text + 2px cyan border bottom</li>
+			<li>Sort šipky: Unicode ▲▼ → inline SVG (konzistentní v každém prohlížeči)</li>
+			<li>Tbody hover: subtle cyan místo plné bílé</li>
+		</ul>
+	</div>
+</div>
+
+<div class="compare">
+	<h2>2. Detail klienta — /clients/view/1 (Pepa Veverka)</h2>
+	<p class="desc">Nová sekce "Rychlé akce" + modernizovaný thead.</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED</div>
+			<img src="before/13_clients_view.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO</div>
+			<img src="after/13_clients_view.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Konkrétní změny:</strong>
+		<ul>
+			<li><strong>NOVÉ:</strong> sekce "Rychlé akce" mezi demografií a souhlasy</li>
+			<li>3 tlačítka: [Zaznamenat sezení] (primary) | [Otevřít průběh epizody] | [Poslat měření klientovi]</li>
+			<li>Zobrazí se jen pro klienty s aktivní epizodou</li>
+			<li>Zrychlí denní flow: z 5 kliků pro nové sezení na 1 klik</li>
+		</ul>
+	</div>
+</div>
+
+<div class="compare">
+	<h2>3. Seznam epizod — /episodes/list</h2>
+	<p class="desc">Stejná modernizace tabulky.</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED</div>
+			<img src="before/20_episodes_list.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO</div>
+			<img src="after/20_episodes_list.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Konkrétní změny:</strong>
+		<ul>
+			<li>Stejná modernizace jako /clients/list (globální .list-table)</li>
+			<li>Sort šipky aktivní/inactive: ▴▾ (SVG) místo Unicode ▲▽▼▽</li>
+		</ul>
+	</div>
+</div>
+
+<div class="compare">
+	<h2>4. Detail epizody — /episodes/view/1 (komplexní obrazovka)</h2>
+	<p class="desc">Pozn.: Vizuální změna jen tam, kde se používá .list-table (item tables pod grafy). Hlavní layout, ZingChart grafy, MKN-10 diagnózy — vše beze změny (intentionally — to je v auditu PRESERVE).</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED</div>
+			<img src="before/23_episodes_view.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO</div>
+			<img src="after/23_episodes_view.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Co se NEZMĚNILO (záměrně):</strong>
+		<ul>
+			<li>Levý sloupec EPIZODA s metadata (zachováno)</li>
+			<li>Pravý sloupec PŘEJÍT NA SEZENÍ + NOVÉ SEZENÍ form (zachováno)</li>
+			<li>ZingChart graf CORE-10 (zachováno)</li>
+			<li>Tabulka instrumentů (zachováno, jen subtle změna borderů)</li>
+		</ul>
+	</div>
+</div>
+
+<div class="footer">
+	Vygenerováno 2026-05-24 z lokálního Monitor repa (privátní). Pro sdílení s externími viz REDESIGN_OVERVIEW.
+</div>
+
+</body>
+</html>

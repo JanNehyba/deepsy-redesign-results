@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeePsy redesign — výsledky konzervativního vizuálního cleanup</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	background:
+		radial-gradient(ellipse at 70% 20%, rgba(91, 200, 221, 0.18) 0%, transparent 50%),
+		linear-gradient(135deg, #0E3641 0%, #0A2A33 100%);
+	min-height: 100vh;
+	color: #fff;
+	font-size: 15px;
+	line-height: 1.55;
+	padding: 40px 24px;
+}
+.container { max-width: 880px; margin: 0 auto; }
+.brand {
+	font-size: 24px;
+	font-weight: 700;
+	color: #5BC8DD;
+	letter-spacing: -0.02em;
+	margin-bottom: 8px;
+}
+h1 { font-size: 32px; margin-bottom: 8px; letter-spacing: -0.01em; }
+.subtitle { color: rgba(255,255,255,0.7); margin-bottom: 40px; font-size: 17px; line-height: 1.6; }
+.card {
+	background: #fff;
+	color: #2C2C2C;
+	border-radius: 12px;
+	padding: 28px;
+	margin-bottom: 20px;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.card h2 { font-size: 20px; margin-bottom: 6px; color: #0A8AA3; }
+.card .desc { color: #5B6E75; margin-bottom: 14px; font-size: 14px; }
+.card a.cta {
+	display: inline-block;
+	padding: 10px 18px;
+	background: #0FA9C6;
+	color: #fff;
+	border-radius: 8px;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 14px;
+	transition: background 0.15s;
+}
+.card a.cta:hover { background: #0A8AA3; }
+.card a.secondary {
+	display: inline-block;
+	padding: 10px 18px;
+	border: 1px solid #DDE6E8;
+	color: #2C2C2C;
+	border-radius: 8px;
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 14px;
+	margin-left: 8px;
+	transition: background 0.15s;
+}
+.card a.secondary:hover { background: #F7FAFB; }
+.principles {
+	background: rgba(255,255,255,0.06);
+	border: 1px solid rgba(255,255,255,0.1);
+	border-radius: 12px;
+	padding: 24px;
+	margin-bottom: 24px;
+}
+.principles h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.06em; color: #5BC8DD; margin-bottom: 12px; }
+.principles ul { list-style: none; }
+.principles li { padding: 4px 0; font-size: 14px; }
+.principles li::before { content: '✓'; margin-right: 10px; color: #5BC8DD; }
+.footer { text-align: center; color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 40px; }
+.footer .brand-logos { margin-bottom: 8px; }
+.footer .brand-logos span { margin: 0 12px; color: rgba(255,255,255,0.7); }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+	<div class="brand">DeePsy</div>
+	<h1>Konzervativní vizuální cleanup</h1>
+	<p class="subtitle">
+		Výsledky první fáze redesignu klinického monitorovacího systému pro psychoterapeuty.
+		Princip: <strong>senior designer cleanup, ne AI redesign.</strong> Zachovává brand a strukturu,
+		modernizuje typografii, barvy a flow.
+	</p>
+
+	<div class="principles">
+		<h3>Co tato fáze přinesla</h3>
+		<ul>
+			<li>Modernizovaný thead tabulek (světlý header s tlumeným textem + cyan akcent)</li>
+			<li>SVG sort šipky (konzistentní v každém prohlížeči)</li>
+			<li>Light bg + ikona flash messages (čitelnější chyby/úspěchy)</li>
+			<li><strong>NOVÉ:</strong> Quick actions v klient view (1 klik místo 5 pro nové sezení)</li>
+			<li>Design tokens layer v SCSS (sémantické aliasy nad současnými barvami)</li>
+		</ul>
+	</div>
+
+	<div class="card">
+		<h2>Před / Po srovnání</h2>
+		<p class="desc">4 klíčové obrazovky vedle sebe — vidíš přesně, co se změnilo a co zůstalo.</p>
+		<a href="before-after.html" class="cta">Otevřít srovnání →</a>
+	</div>
+
+	<div class="card">
+		<h2>Audit dokument</h2>
+		<p class="desc">Mapování každého prvku DeePsy se statusem PRESERVE / MODERNIZE / MOVE / HIDE / REMOVE
+		+ důvod + zdroj. 600+ řádků.</p>
+		<a href="AUDIT.md" class="cta">Otevřít audit →</a>
+	</div>
+
+	<div class="card">
+		<h2>Co je v rozsahu / co ne</h2>
+		<p class="desc">
+			<strong>V rozsahu této fáze:</strong> 6 klíčových obrazovek terapeuta (dashboard, klienti, klient view,
+			epizody, epizoda view, sezení view) + globální layout (header, footer, glass, tabulky, alerts).
+		</p>
+		<p class="desc">
+			<strong>Mimo rozsah:</strong> Admin role (projects, sites, users), měřicí flow pro klienty,
+			souhlasy, veřejné stránky (landing, about, login). Pojídá later phase.
+		</p>
+		<p class="desc">
+			<strong>Co se NEMĚNILO záměrně:</strong> ZingChart grafy, CKEditor, audio player MediaElement,
+			datový model (Episode entity zůstává), routes, controllers, JS chování. Pouze vizuální vrstva.
+		</p>
+	</div>
+
+	<div class="card">
+		<h2>Technický kontext</h2>
+		<p class="desc">
+			Stack: CodeIgniter 4 + Bootstrap 4.5 + jQuery 3.5 + SCSS + ZingChart + Montserrat.
+			Bez nových frameworků. Změny commitované v privátním repu monitor-notes.
+		</p>
+		<p class="desc">
+			Tento veřejný repo obsahuje JEN výsledky (before/after PNG + audit + popis), žádný
+			zdrojový kód Monitoru.
+		</p>
+	</div>
+
+	<div class="footer">
+		<div class="brand-logos">
+			<span><strong>MUNI</strong> · Masarykova univerzita</span>
+			<span><strong>TAČR</strong></span>
+			<span><strong>BUT</strong> · Speech@FIT</span>
+		</div>
+		Vytvořeno 2026-05-24 · DeePsy / Monitor · Vyvinuto na MUNI FSS · Brno<br>
+		<span style="opacity: 0.6">Všechny screenshoty pocházejí z lokální vývojové DB s fiktivními testovacími daty.</span>
+	</div>
+
+</div>
+
+</body>
+</html>
