@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeePsy redesign — Fáze 6: Sekundární menu pruh odstraněn</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0E3641; color: #fff; padding: 24px; }
+h1 { font-size: 28px; margin-bottom: 8px; letter-spacing: -0.01em; }
+.subtitle { color: rgba(255,255,255,0.7); margin-bottom: 32px; font-size: 15px; }
+.back { color: #5BC8DD; text-decoration: none; font-size: 14px; }
+.back:hover { text-decoration: underline; }
+.compare {
+	background: #fff;
+	color: #2C2C2C;
+	border-radius: 12px;
+	padding: 24px;
+	margin-bottom: 32px;
+	box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+.compare h2 { font-size: 20px; margin-bottom: 8px; color: #0A8AA3; }
+.compare .desc { color: #5B6E75; margin-bottom: 20px; font-size: 14px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.col { border: 1px solid #DDE6E8; border-radius: 8px; overflow: hidden; }
+.col-header {
+	padding: 10px 16px;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	font-weight: 700;
+	border-bottom: 1px solid #DDE6E8;
+	background: #F7FAFB;
+}
+.col-header.before { color: #B91C1C; }
+.col-header.after { color: #15803D; }
+img { display: block; width: 100%; height: auto; }
+.changes { background: #F7FAFB; padding: 16px; border-radius: 8px; margin-top: 16px; font-size: 14px; }
+.changes strong { color: #0A8AA3; }
+.changes ul { padding-left: 20px; margin-top: 8px; }
+.changes li { margin-bottom: 4px; }
+.principle {
+	background: rgba(91, 200, 221, 0.12);
+	border: 1px solid rgba(91, 200, 221, 0.25);
+	border-radius: 12px;
+	padding: 20px 24px;
+	margin-bottom: 32px;
+	color: rgba(255,255,255,0.92);
+}
+.principle h3 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: #5BC8DD; margin-bottom: 8px; }
+.footer { text-align: center; color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 40px; }
+.highlight { background: #FEF3C7; padding: 2px 6px; border-radius: 3px; font-weight: 600; color: #92400E; }
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back">← Zpět na rozcestník</a>
+<h1 style="margin-top: 16px;">Fáze 6 — Sekundární menu pruh odstraněn</h1>
+<p class="subtitle">Akce přesunuty z odděleného horizontálního pruhu do hlavičky každého objektu. Linear/Notion/Stripe pattern. Žádný IA zmatek mezi globální navigací a kontextovými akcemi.</p>
+
+<div class="principle">
+	<h3>Princip</h3>
+	<strong>Problém:</strong> Dva horizontální menu pruhy na každé authenticated stránce — top nav (globální navigace) + sekundární pruh (kontextové akce). Nejhorší případ <code>/episodes/view</code> měl 7 tlačítek v pruhu (upravit · účastníci · ukončit · sdílet · poznámky · export · smazat).<br><br>
+	<strong>Řešení:</strong> Sekundární pruh úplně odstraněn. Akce přesunuty do <strong>hlavičky každého objektu</strong> jako <span class="highlight">1× primární tlačítko + ⋯ dropdown</span> s ostatními akcemi. Destruktivní akce (smazat) v dropdownu pod separátorem, červeně označené.
+</div>
+
+<div class="compare">
+	<h2>1. Detail epizody — /episodes/view/1</h2>
+	<p class="desc">Klíčové vítězství: <strong>z 7 tlačítek na 1 button + ⋯</strong>. Žádný oddělený menu pruh.</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED Fáze 6 (commit e58543ba)</div>
+			<img src="before-phase6/23_episodes_view.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO (commit 3527d960)</div>
+			<img src="after-phase6/23_episodes_view.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Co se změnilo:</strong>
+		<ul>
+			<li>Sekundární pruh <span class="highlight">"upravit · účastníci · ukončit · sdílet · poznámky · export · smazat"</span> ZMIZEL</li>
+			<li>V hlavičce "/ EPIZODA" je teď: <strong>[Zaznamenat sezení]</strong> (primary cyan) + <strong>⋯</strong> (dropdown)</li>
+			<li>Dropdown obsahuje všech 7 původních akcí + bonus "Otevřít průběh epizody"</li>
+			<li>Destruktivní akce "Smazat epizodu" je pod separátorem, červená</li>
+		</ul>
+	</div>
+</div>
+
+<div class="compare">
+	<h2>2. Detail klienta — /clients/view/1</h2>
+	<p class="desc">Quick actions z Fáze 4 sloučeny do hlavičky. Žádné duplicitní akce.</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED Fáze 6</div>
+			<img src="before-phase6/13_clients_view.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO</div>
+			<img src="after-phase6/13_clients_view.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Co se změnilo:</strong>
+		<ul>
+			<li>Sekundární pruh "upravit klienta · smazat klienta" ZMIZEL</li>
+			<li>Quick actions sekce z Fáze 4 SLOUČENA do hlavičky (byla redundantní)</li>
+			<li>V hlavičce "/ PEPA VEVERKA" je teď: <strong>[Zaznamenat sezení]</strong> + <strong>⋯</strong></li>
+			<li>Dropdown: Upravit · Otevřít průběh · Smazat klienta...</li>
+		</ul>
+	</div>
+</div>
+
+<div class="compare">
+	<h2>3. Detail sezení — /sessions/view/8</h2>
+	<p class="desc">Sekundární pruh nahrazen prev/next + zpět + dropdown v hlavičce.</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED Fáze 6</div>
+			<img src="before-phase6/31_sessions_view.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO</div>
+			<img src="after-phase6/31_sessions_view.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Co se změnilo:</strong>
+		<ul>
+			<li>Sekundární pruh "zpět · upravit · klienti · poznámky · smazat" ZMIZEL</li>
+			<li>V hlavičce "/ 6. SEZENÍ" je teď: prev/next šipky + <strong>[Zpět na epizodu]</strong> + <strong>⋯</strong></li>
+			<li>Dropdown: Editovat · Spravovat klienty · Stará poznámka · Smazat</li>
+		</ul>
+	</div>
+</div>
+
+<div class="compare">
+	<h2>4. Seznam klientů — /clients/list</h2>
+	<p class="desc">Toggle a primární akce přesunuty do hlavičky page kartě.</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED Fáze 6</div>
+			<img src="before-phase6/10_clients_list.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO</div>
+			<img src="after-phase6/10_clients_list.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Co se změnilo:</strong>
+		<ul>
+			<li>Sekundární pruh "● aktivní toggle · + nový klient" ZMIZEL</li>
+			<li>Toggle a "+ Nový klient" jsou teď v hlavičce karty vpravo</li>
+			<li>Search input zůstává pod hlavičkou</li>
+			<li>JS funkčnost toggle zachována (#active, #switch_form)</li>
+		</ul>
+	</div>
+</div>
+
+<div class="compare">
+	<h2>5. Seznam epizod — /episodes/list</h2>
+	<p class="desc">Stejně jako klienti list.</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED Fáze 6</div>
+			<img src="before-phase6/20_episodes_list.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO</div>
+			<img src="after-phase6/20_episodes_list.png" alt="Po">
+		</div>
+	</div>
+</div>
+
+<div class="principle">
+	<h3>Stop pravidla dodržena</h3>
+	<ul style="list-style: none; padding: 0;">
+		<li>✅ Žádný nový framework (Bootstrap 4 dropdown via Popper.js — built-in)</li>
+		<li>✅ Žádné renames CSS tříd</li>
+		<li>✅ Žádné změny routes, controllers, modelů</li>
+		<li>✅ Confirm dialog modal triggers zachovány (confirmDialog())</li>
+		<li>✅ Role checks zachovány ($episode-&gt;isOwner, $user-&gt;display_delete_button)</li>
+		<li>✅ Toggle Aktivní/Neaktivní JS handler zachován (#active, #switch_form)</li>
+	</ul>
+</div>
+
+<div class="footer">
+	Commit 3527d960 · 2026-05-24 · DeePsy / Monitor · Vyvinuto na MUNI FSS · Brno
+</div>
+
+</body>
+</html>
