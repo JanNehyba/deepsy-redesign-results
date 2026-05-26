@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<title>DeePsy demo — interaktivní klikací průchod</title>
+<link rel="stylesheet" href="_demo.css">
+<style>
+.intro { max-width: 720px; margin: 80px auto; padding: 40px; background: #fff; color: #2C2C2C; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+.intro h1 { font-size: 28px; color: #0FA9C6; margin-bottom: 16px; }
+.intro p { line-height: 1.6; margin-bottom: 16px; font-size: 15px; }
+.intro ol { padding-left: 24px; margin-bottom: 24px; line-height: 1.8; font-size: 14px; }
+.intro ol li { margin-bottom: 4px; }
+.intro .cta {
+	display: inline-block; padding: 14px 28px;
+	background: #0FA9C6; color: white;
+	text-decoration: none; border-radius: 8px;
+	font-weight: 700; font-size: 16px;
+	transition: background 0.15s;
+}
+.intro .cta:hover { background: #0E8FA8; }
+.intro .secondary { color: #5B6E75; font-size: 13px; margin-top: 16px; }
+.intro .secondary a { color: #0FA9C6; }
+</style>
+</head>
+<body>
+
+<div class="intro">
+	<h1>DeePsy — interaktivní klikací demo</h1>
+	<p>Proklikni si <strong>základní flow terapeuta</strong>: ze seznamu klientů přes epizodu až na sezení. Včetně ⚙ dropdownů s akcemi.</p>
+
+	<p><strong>Co uvidíš:</strong></p>
+	<ol>
+		<li>Seznam klientů → klik na klienta</li>
+		<li>Auto-redirect na <strong>aktivní epizodu</strong> (Fáze 7 UX rework)</li>
+		<li>Otevření ⚙ dropdown s akcemi (Upravit, Účastníci, Sdílet, Info o klientovi, …)</li>
+		<li>Klik na poslední sezení → detail sezení</li>
+		<li>Otevření ⚙ dropdown na sezení</li>
+		<li>Návrat na epizodu přes "Zpět na epizodu" link</li>
+	</ol>
+
+	<p><strong>Žluté blikající rámečky</strong> ukazují, kam můžeš kliknout. Po cestě je nahoře pruh s krokem a tlačítky pro navigaci.</p>
+
+	<a href="clients-list.html" class="cta">Spustit demo →</a>
+
+	<p class="secondary">Demo je statické (screenshoty + odkazy), žádná reálná data ani backend. Pro before/po srovnání viz <a href="../before-after.html">before-after.html</a>.</p>
+</div>
+
+</body>
+</html>
