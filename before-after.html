@@ -2,12 +2,13 @@
 <html lang="cs">
 <head>
 <meta charset="utf-8">
-<title>DeePsy redesign — před / po</title>
+<title>DeePsy redesign — před / po (Fáze 0–7)</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, sans-serif; background: #0E3641; color: #fff; padding: 24px; }
 h1 { font-size: 28px; margin-bottom: 8px; }
-.subtitle { color: rgba(255,255,255,0.6); margin-bottom: 32px; font-size: 14px; }
+.subtitle { color: rgba(255,255,255,0.6); margin-bottom: 32px; font-size: 14px; max-width: 900px; line-height: 1.55; }
+.subtitle code { background: rgba(255,255,255,0.1); padding: 1px 6px; border-radius: 3px; font-family: ui-monospace, SF Mono, Menlo, monospace; font-size: 13px; }
 .compare {
 	background: #fff;
 	color: #2C2C2C;
@@ -17,7 +18,7 @@ h1 { font-size: 28px; margin-bottom: 8px; }
 	box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
 .compare h2 { font-size: 20px; margin-bottom: 8px; color: #0FA9C6; }
-.compare .desc { color: #5B6E75; margin-bottom: 20px; font-size: 14px; }
+.compare .desc { color: #5B6E75; margin-bottom: 20px; font-size: 14px; line-height: 1.55; }
 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .col { border: 1px solid #DDE6E8; border-radius: 8px; overflow: hidden; }
 .col-header {
@@ -32,112 +33,207 @@ h1 { font-size: 28px; margin-bottom: 8px; }
 .col-header.before { color: #B91C1C; }
 .col-header.after { color: #15803D; }
 img { display: block; width: 100%; height: auto; }
-.changes { background: #F7FAFB; padding: 16px; border-radius: 8px; margin-top: 16px; font-size: 14px; }
+.changes { background: #F7FAFB; padding: 16px; border-radius: 8px; margin-top: 16px; font-size: 14px; line-height: 1.55; }
 .changes ul { padding-left: 20px; }
 .changes li { margin-bottom: 4px; }
+.changes code { background: rgba(15,169,198,0.1); padding: 1px 5px; border-radius: 3px; font-family: ui-monospace, SF Mono, Menlo, monospace; font-size: 12px; }
+.note {
+	background: #FFF8E1;
+	border-left: 4px solid #F5A623;
+	padding: 16px 20px;
+	border-radius: 6px;
+	margin: 20px 0;
+	font-size: 14px;
+	line-height: 1.55;
+	color: #3D3424;
+}
+.note strong { color: #B7791F; }
+.skip-banner {
+	background: #FEF3F2;
+	color: #B42318;
+	padding: 10px 16px;
+	font-size: 13px;
+	font-weight: 600;
+	border: 1px solid #FDA29B;
+	border-radius: 8px;
+	margin: 12px 0;
+}
 .footer { text-align: center; color: rgba(255,255,255,0.5); font-size: 12px; margin-top: 40px; }
+.footer a { color: rgba(255,255,255,0.7); }
 </style>
 </head>
 <body>
 
 <h1>DeePsy — konzervativní vizuální cleanup</h1>
-<p class="subtitle">Před a po na 4 klíčových obrazovkách. Vše real-app, žádné mockupy. Lokální verze pro tvoji kontrolu.</p>
+<p class="subtitle">
+Před a po na 5 klíčových obrazovkách. Vlevo <strong>PŘED</strong> = stav z commit <code>795f29eb</code>
+(Fáze 1 — pouze Playwright fix, žádná vizuální změna). Vpravo <strong>PO</strong> = aktuální stav po
+Fázích 0–7 (design tokens, sekundární menu pruh odstraněn, akce v hlavičce objektu, auto-redirect
+klient → aktivní epizoda).
+</p>
 
+<!-- ====================== 1. CLIENTS LIST ====================== -->
 <div class="compare">
-	<h2>1. Seznam klientů — /clients/list</h2>
-	<p class="desc">Modernizace hlavičky tabulky + SVG sort šipky.</p>
+	<h2>1. Seznam klientů — <code>/clients/list</code></h2>
+	<p class="desc">Modernizace tabulky + sekundární menu pruh odstraněn → toggle Aktivní/Neaktivní v hlavičce, "+ Nový klient" v pravém dolním rohu vedle stránkování.</p>
 	<div class="cols">
 		<div class="col">
 			<div class="col-header before">PŘED (commit 795f29eb)</div>
 			<img src="before/10_clients_list.png" alt="Před">
 		</div>
 		<div class="col">
-			<div class="col-header after">PO (commit 52391d40)</div>
-			<img src="after/10_clients_list.png" alt="Po">
+			<div class="col-header after">PO (aktuální stav)</div>
+			<img src="after-final/10_clients_list.png" alt="Po">
 		</div>
 	</div>
 	<div class="changes">
 		<strong>Konkrétní změny:</strong>
 		<ul>
-			<li>Header KLIENT / E-MAIL / EPIZODY / UPOZORNĚNÍ: cyan + bílý uppercase → světlý bg + tlumený text + 2px cyan border bottom</li>
-			<li>Sort šipky: Unicode ▲▼ → inline SVG (konzistentní v každém prohlížeči)</li>
-			<li>Tbody hover: subtle cyan místo plné bílé</li>
+			<li>Sekundární menu pruh (Aktivní/Neaktivní + Nový) — <strong>odstraněn</strong>, akce přesunuty do hlavičky objektu / footer</li>
+			<li>Toggle "Aktivní/Neaktivní" vpravo nahoře v hlavičce <code>.object-header</code></li>
+			<li>"+ Nový klient" přesunut do <code>.list-footer</code> vedle paginace (pravý dolní roh)</li>
+			<li>Tbody hover: subtle cyan místo plné bílé; SVG sort šipky</li>
 		</ul>
 	</div>
 </div>
 
+<!-- ====================== 2. CLIENT REDIRECT NOTE ====================== -->
 <div class="compare">
-	<h2>2. Detail klienta — /clients/view/1 (Pepa Veverka)</h2>
-	<p class="desc">Nová sekce "Rychlé akce" + modernizovaný thead.</p>
+	<h2>2. Klient → Epizoda — <code>/clients/view/{id}</code> &nbsp; <span style="color:#B42318;font-size:14px;font-weight:normal;">(přeskočeno — viz poznámka)</span></h2>
+	<p class="desc">Detail klienta býval mezistránkou s demografií + seznamem epizod. V drtivé většině práce terapeut ale potřebuje pracovat na <strong>aktivní epizodě</strong>, takže "klient" byl zbytečný proklik navíc.</p>
+
+	<div class="note">
+		<strong>Fáze 7 — UX rework:</strong> <code>Clients::view($id)</code> nyní udělá <strong>auto-redirect</strong> na <code>/episodes/view/{aktivni}</code>, pokud klient má aktivní epizodu. Demografie / souhlasy / e-mail / jazyk jsou dostupné přes <strong>⚙ dropdown na epizodě → "Info o klientovi"</strong> → <code>/clients/view/{id}?info=1</code> (query param bypassne redirect).
+		<br><br>
+		<strong>Důsledek pro tuto srovnávací stránku:</strong> reálná destinace po kliknutí na klienta v listu = epizoda (viz sekce 3 níže). Pro úplnost ukazujeme jen <em>fallback</em> stránku <code>?info=1</code>:
+	</div>
+
 	<div class="cols">
 		<div class="col">
-			<div class="col-header before">PŘED</div>
+			<div class="col-header before">PŘED — výchozí destinace</div>
 			<img src="before/13_clients_view.png" alt="Před">
 		</div>
 		<div class="col">
-			<div class="col-header after">PO</div>
-			<img src="after/13_clients_view.png" alt="Po">
+			<div class="col-header after">PO — jen jako "Info o klientovi" (<code>?info=1</code>)</div>
+			<img src="after-final/13_clients_view_info.png" alt="Po">
 		</div>
 	</div>
 	<div class="changes">
 		<strong>Konkrétní změny:</strong>
 		<ul>
-			<li><strong>NOVÉ:</strong> sekce "Rychlé akce" mezi demografií a souhlasy</li>
-			<li>3 tlačítka: [Zaznamenat sezení] (primary) | [Otevřít průběh epizody] | [Poslat měření klientovi]</li>
-			<li>Zobrazí se jen pro klienty s aktivní epizodou</li>
-			<li>Zrychlí denní flow: z 5 kliků pro nové sezení na 1 klik</li>
+			<li>Auto-redirect <code>Clients::view()</code> → <code>/episodes/view/{aktivni}</code> (pokud existuje a request není <code>?info=1</code>)</li>
+			<li>Hlavička: jen <strong>jméno + ⚙</strong> (žádné prim. tlačítko — to patří na epizodu)</li>
+			<li>⚙ obsahuje: Upravit klienta · Data export · Smazat klienta</li>
+			<li>Fallback režim: klient bez aktivní epizody zde vidí "+ Nová epizoda" jako primární akci</li>
 		</ul>
 	</div>
 </div>
 
+<!-- ====================== 3. EPISODES VIEW (hlavní destinace) ====================== -->
 <div class="compare">
-	<h2>3. Seznam epizod — /episodes/list</h2>
-	<p class="desc">Stejná modernizace tabulky.</p>
+	<h2>3. Detail epizody — <code>/episodes/view/{id}</code> &nbsp; <span style="color:#0FA9C6;font-size:14px;font-weight:normal;">(hlavní pracovní obrazovka)</span></h2>
+	<p class="desc">Toto je nyní <strong>výchozí destinace</strong> po kliknutí na klienta. Object-header s ⚙ dropdownem nahradil 7-akční sekundární pruh, který tu předtím byl.</p>
 	<div class="cols">
 		<div class="col">
-			<div class="col-header before">PŘED</div>
-			<img src="before/20_episodes_list.png" alt="Před">
-		</div>
-		<div class="col">
-			<div class="col-header after">PO</div>
-			<img src="after/20_episodes_list.png" alt="Po">
-		</div>
-	</div>
-	<div class="changes">
-		<strong>Konkrétní změny:</strong>
-		<ul>
-			<li>Stejná modernizace jako /clients/list (globální .list-table)</li>
-			<li>Sort šipky aktivní/inactive: ▴▾ (SVG) místo Unicode ▲▽▼▽</li>
-		</ul>
-	</div>
-</div>
-
-<div class="compare">
-	<h2>4. Detail epizody — /episodes/view/1 (komplexní obrazovka)</h2>
-	<p class="desc">Pozn.: Vizuální změna jen tam, kde se používá .list-table (item tables pod grafy). Hlavní layout, ZingChart grafy, MKN-10 diagnózy — vše beze změny (intentionally — to je v auditu PRESERVE).</p>
-	<div class="cols">
-		<div class="col">
-			<div class="col-header before">PŘED</div>
+			<div class="col-header before">PŘED (commit 795f29eb)</div>
 			<img src="before/23_episodes_view.png" alt="Před">
 		</div>
 		<div class="col">
-			<div class="col-header after">PO</div>
-			<img src="after/23_episodes_view.png" alt="Po">
+			<div class="col-header after">PO (aktuální stav)</div>
+			<img src="after-final/23_episodes_view.png" alt="Po">
 		</div>
 	</div>
 	<div class="changes">
-		<strong>Co se NEZMĚNILO (záměrně):</strong>
+		<strong>Konkrétní změny:</strong>
 		<ul>
-			<li>Levý sloupec EPIZODA s metadata (zachováno)</li>
-			<li>Pravý sloupec PŘEJÍT NA SEZENÍ + NOVÉ SEZENÍ form (zachováno)</li>
-			<li>ZingChart graf CORE-10 (zachováno)</li>
-			<li>Tabulka instrumentů (zachováno, jen subtle změna borderů)</li>
+			<li>Sekundární menu pruh s 7 akcemi <strong>odstraněn</strong> → vše v <strong>⚙ dropdownu</strong> v hlavičce</li>
+			<li>⚙ obsahuje: Upravit epizodu · Účastníci · Sdílet přístup · Info o klientovi · Všechny poznámky · Exportovat data · Ukončit/Reopen epizodu · Smazat</li>
+			<li>Object-header H1 "Epizoda" + ⚙ — <strong>bílá barva</strong> (sedí na tmavém glass pozadí vln, ne ve white card)</li>
+			<li>Primární akce zůstávají v pravém sloupci: "Poslední sezení" + dropdown sezení + formulář "Nové sezení"</li>
+			<li>Levý sloupec (metadata, diagnózy MKN-10) + ZingChart grafy — <strong>záměrně beze změny</strong> (PRESERVE v auditu)</li>
+		</ul>
+	</div>
+</div>
+
+<!-- ====================== 4. SESSIONS VIEW ====================== -->
+<div class="compare">
+	<h2>4. Detail sezení — <code>/sessions/view/{id}</code> &nbsp; <span style="color:#0FA9C6;font-size:14px;font-weight:normal;">(hlavní práce s nahrávkou + AI poznámkou)</span></h2>
+	<p class="desc">Úroveň 4 — kde terapeut tráví nejvíc času. Zde se vyskytují inline CSS hříchy (sessions_view.php měl 80+ řádků <code>&lt;style&gt;</code>), které Fáze 5 přesunula do SCSS partials.</p>
+
+	<div class="note">
+		<strong>Poznámka:</strong> commit 795f29eb (baseline) neměl screenshot pro sessions/view — Playwright resolver byl tehdy rozbitý a vracel null pro firstSession. Ukazujeme jen <strong>aktuální stav PO</strong>.
+	</div>
+
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED — nezachyceno (Playwright bug)</div>
+			<div style="padding:40px;text-align:center;color:#9CA3AF;background:#F9FAFB;font-size:14px;">
+				Screenshot chybí — viz poznámka výše.<br>
+				Před cleanup: 80+ řádků inline <code>&lt;style&gt;</code>,<br>5-akční sekundární menu pruh.
+			</div>
+		</div>
+		<div class="col">
+			<div class="col-header after">PO (aktuální stav)</div>
+			<img src="after-final/31_sessions_view.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Konkrétní změny:</strong>
+		<ul>
+			<li>Inline <code>&lt;style&gt;</code> (245 řádků tab styling + 19 transcript + 246 Toast UI editor) → SCSS partials <code>_session-tabs.scss</code>, <code>_transcript.scss</code>, <code>_note-editor.scss</code></li>
+			<li>Object-header v hlavičce: <strong>"Zpět na epizodu"</strong> link + prev/next šipky + <strong>⚙ dropdown</strong> (Upravit, Účastníci, Poznámky, Smazat)</li>
+			<li>H1 + back-link + šipky + ⚙ — vše <strong>bílé</strong> a na stejné vertikální úrovni</li>
+			<li>Tabs (Dotazníky / Poznámka / Dekurz / Přepis / Grafy) — beze změny chování</li>
+			<li>AI poznámka s 8 sekcemi (data, questionnaire_summary, risk_assessment, clinical_hypotheses, constructs, progress, alliance, plan) — <strong>záměrně beze změny</strong></li>
+		</ul>
+	</div>
+</div>
+
+<!-- ====================== 5. EPISODES LIST ====================== -->
+<div class="compare">
+	<h2>5. Seznam epizod — <code>/episodes/list</code></h2>
+	<p class="desc">Symetricky s <code>/clients/list</code>: stejný object-header pattern, toggle + filtr v hlavičce, "+ Nová epizoda" v footer.</p>
+	<div class="cols">
+		<div class="col">
+			<div class="col-header before">PŘED (commit 795f29eb)</div>
+			<img src="before/20_episodes_list.png" alt="Před">
+		</div>
+		<div class="col">
+			<div class="col-header after">PO (aktuální stav)</div>
+			<img src="after-final/20_episodes_list.png" alt="Po">
+		</div>
+	</div>
+	<div class="changes">
+		<strong>Konkrétní změny:</strong>
+		<ul>
+			<li>Sekundární menu pruh — odstraněn (toggle do hlavičky, "+ Nová epizoda" do footer)</li>
+			<li>Filtr select s popiskem "Filtr:" (předtím <code>(bez omezení)</code> useknuté na <code>(bez ome×</code>) + min-width 200px</li>
+			<li>Zdvojená šedá čára pod tabulkou (table border + footer border-top) — odstraněna</li>
+			<li>Stejná modernizace <code>.list-table</code> jako /clients/list</li>
+		</ul>
+	</div>
+</div>
+
+<!-- ====================== SHRNUTÍ ====================== -->
+<div class="compare">
+	<h2>Shrnutí fází (kompletní)</h2>
+	<div class="changes">
+		<ul>
+			<li><strong>Fáze 0</strong> — Cleanup HTML mockup pokusu (Tailwind CDN repo smazán/archivován)</li>
+			<li><strong>Fáze 1</strong> — Audit <code>docs/REDESIGN_AUDIT.md</code> (600+ řádků) + Playwright resolver fix</li>
+			<li><strong>Fáze 2</strong> — Design tokens layer (<code>_sass/_tokens.scss</code>) — sémantické aliasy, žádná vizuální změna</li>
+			<li><strong>Fáze 3</strong> — Konzervativní cleanup (thead, sort šipky, hover, alert, focus)</li>
+			<li><strong>Fáze 4</strong> — Quick actions v clients/view (Zaznamenat / Otevřít / Měření)</li>
+			<li><strong>Fáze 5</strong> — Inline <code>&lt;style&gt;</code> → SCSS partials (clean up sessions_view.php)</li>
+			<li><strong>Fáze 6</strong> — Sekundární menu pruh úplně <strong>odstraněn</strong>, akce do hlavičky objektu (object-header pattern)</li>
+			<li><strong>Fáze 7</strong> — Object-header polish (bílé prvky na tmavém glass) + auto-redirect klient → epizoda + "Info o klientovi" v ⚙</li>
 		</ul>
 	</div>
 </div>
 
 <div class="footer">
-	Vygenerováno 2026-05-24 z lokálního Monitor repa (privátní). Pro sdílení s externími viz REDESIGN_OVERVIEW.
+	Vygenerováno 2026-05-26 z lokálního Monitor repa (privátní <a href="https://github.com/JanNehyba/monitor-notes">JanNehyba/monitor-notes</a>, branch <code>feature/design-brief</code>).
+	Test data only — žádní reální pacienti.
 </div>
 
 </body>
