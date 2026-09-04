@@ -26,19 +26,6 @@
 		}
 	}
 
-	function countWords(text) {
-		return (text.match(/[\p{L}\p{N}]+(?:[’'-][\p{L}\p{N}]+)*/gu) || []).length;
-	}
-
-	document.querySelectorAll("[data-note-body]").forEach((body) => {
-		const format = body.dataset.noteBody;
-		const target = document.querySelector("[data-word-count-for='" + format + "']");
-		if (target) {
-			const total = countWords(body.textContent);
-			target.textContent = total + (total >= 2 && total <= 4 ? " slova" : " slov");
-		}
-	});
-
 	tabs.forEach((tab, index) => {
 		tab.addEventListener("click", () => activate(tab.dataset.format, true));
 
