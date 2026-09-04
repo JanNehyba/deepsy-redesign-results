@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="noindex, nofollow, noarchive">
+	<meta name="description" content="Výzkumný prototyp porovnávající čtyři formáty terapeutického zápisu na jednom fiktivním případu.">
+	<meta name="theme-color" content="#004e5c">
+	<title>Ukázka formátů terapeutického zápisu — DeePsy</title>
+	<link rel="icon" type="image/png" href="assets/favicon-32x32.png">
+	<link rel="stylesheet" href="styles.css">
+	<script src="app.js" defer></script>
+</head>
+<body>
+	<div class="page-background" aria-hidden="true"></div>
+
+	<header class="topbar">
+		<div class="shell topbar__inner">
+			<img class="brand-logo" src="assets/deepsy-logo.png" width="120" height="30" alt="DeePsy">
+			<span class="prototype-badge">Výzkumný prototyp</span>
+		</div>
+	</header>
+
+	<main class="shell" id="main-content">
+		<section class="intro" aria-labelledby="page-title">
+			<p class="eyebrow">Porovnání formátů terapeutického zápisu</p>
+			<h1 id="page-title">5. sezení — Jana N. <span>(demo)</span></h1>
+			<p class="intro__lead">Čtyři způsoby zápisu stejného fiktivního sezení. Přepínejte mezi formáty a porovnejte jejich přehlednost, rozsah a praktickou použitelnost.</p>
+		</section>
+
+		<aside class="source-notice" aria-labelledby="source-title">
+			<div class="source-notice__icon" aria-hidden="true">i</div>
+			<div>
+				<h2 id="source-title">O původu ukázky</h2>
+				<p>Tato ukázka vychází z veřejně dostupných demonstračních psychoterapeutických videí. Kvůli ochraně soukromí neuvádíme konkrétní zdroje. Případ byl přeložen a přepracován do fiktivní kompozice; změněny byly identifikační, biografické i situační detaily. Jana N. není skutečná klientka a text není zdravotnickou dokumentací.</p>
+			</div>
+		</aside>
+
+		<div class="format-tabs" role="tablist" aria-label="Formáty terapeutického zápisu">
+			<button class="format-tab is-active" id="tab-deepsy" type="button" role="tab" aria-selected="true" aria-controls="panel-deepsy" tabindex="0" data-format="deepsy">
+				<span>Plný zápis DeePsy</span>
+			</button>
+			<button class="format-tab" id="tab-dap" type="button" role="tab" aria-selected="false" aria-controls="panel-dap" tabindex="-1" data-format="dap">
+				<span>DAP</span>
+			</button>
+			<button class="format-tab" id="tab-dekurz" type="button" role="tab" aria-selected="false" aria-controls="panel-dekurz" tabindex="-1" data-format="dekurz">
+				<span>Dekurz</span>
+			</button>
+			<button class="format-tab" id="tab-girp" type="button" role="tab" aria-selected="false" aria-controls="panel-girp" tabindex="-1" data-format="girp">
+				<span>GIRP</span>
+			</button>
+		</div>
+
+		<section class="note-card">
+			<article class="format-panel" id="panel-deepsy" role="tabpanel" aria-labelledby="tab-deepsy" tabindex="0" data-panel="deepsy">
+				<header class="format-heading">
+					<div>
+						<p class="format-heading__type">Komplexní strukturovaný zápis</p>
+						<h2>Plný zápis DeePsy</h2>
+						<p>Odděluje popisná data, klinické hodnocení, průběh spolupráce a dohodnutý plán.</p>
+					</div>
+					<span class="word-count" data-word-count-for="deepsy" aria-live="polite"></span>
+				</header>
+
+				<div class="note-body" data-note-body="deepsy">
+					<section class="note-section">
+						<h3>Data</h3>
+						<h4>Hlavní témata</h4>
+						<ul>
+							<li>Úzkost při mluvení ve skupině, obava ze selhání a postupné omezování vyhýbání.</li>
+							<li>Zkušenost z poslední pracovní porady a příprava krátké prezentace na příští týden.</li>
+						</ul>
+						<h4>Problémy a symptomy</h4>
+						<p>Před poradou klientka zaznamenala napětí, zrychlené dýchání a myšlenku „zablokuji se“. Měla chuť účast zrušit, ale na poradu přišla a položila jednu předem připravenou otázku.</p>
+						<h4>Terapeutické cíle</h4>
+						<p>Mluvit při pracovních setkáních i za přítomnosti úzkosti a postupně snižovat vyhýbání skupinovým situacím.</p>
+						<h4>Zdroje a silné stránky</h4>
+						<p>Klientka dokázala použít zpomalené dýchání a uzemnění, zůstala na poradě a dokáže rozlišit obavu od skutečného výsledku.</p>
+						<h4>Důležité osoby</h4>
+						<p>Kolegyně nabídla klientce, že s ní předem projde připravovanou prezentaci.</p>
+						<h4>Důležité události a data</h4>
+						<p>Na příští týden je plánována krátká prezentace na týmové poradě.</p>
+					</section>
+
+					<section class="note-section">
+						<h3>Hodnocení — sumarizace dotazníků</h3>
+						<h4>Aktuální skóry</h4>
+						<p>CORE-10: 0,9/4. WHO-5: 2,8/5. SRS-3-B: nápomocné reakce 3,9/5, brzdící reakce 1,5/5.</p>
+						<h4>Analýza změny</h4>
+						<p>CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8. Oba ukazatele se změnily příznivým směrem; statistická spolehlivost změny nebyla posouzena.</p>
+						<h4>Klinická interpretace</h4>
+						<p>Výsledky odpovídají klientkou popsanému zmírnění obtíží. Hodnocení reakce na sezení je převážně příznivé.</p>
+					</section>
+
+					<section class="note-section">
+						<h3>Hodnocení — riziko</h3>
+						<p>Klientka výslovně popřela sebevražedné myšlenky, sebepoškozování i rizikové užívání návykových látek. V poskytnutých údajích nebyly zachyceny známky akutního ohrožení. Krizový plán nebyl v tomto sezení probírán.</p>
+					</section>
+
+					<section class="note-section">
+						<h3>Hodnocení — klinické hypotézy</h3>
+						<h4>Kognitivně-behaviorální perspektiva</h4>
+						<p>Představa, že se při mluvení před skupinou zablokuje, může zvyšovat tělesné napětí a podporovat vyhýbání. Zkušenost z porady, kterou klientka dokončila navzdory úzkosti, může poskytovat korektivní zkušenost.</p>
+					</section>
+
+					<section class="note-section">
+						<h3>Hodnocení — změna a progres</h3>
+						<h4>Zlepšení</h4>
+						<p>Klientka se porady zúčastnila, použila domluvené strategie a aktivně promluvila. Úzkost během situace poklesla ze 7/10 na 4/10.</p>
+						<h4>Přetrvávající obtíže</h4>
+						<p>Před skupinovým vystoupením přetrvává očekávání selhání a nutkání situaci odložit.</p>
+					</section>
+
+					<section class="note-section">
+						<h3>Hodnocení — terapeutická aliance</h3>
+						<p>Klientka označila společný rozbor situace a nácvik za užitečné. Skóry SRS-3-B neukazují výrazné potíže ve spolupráci; případné odlišné preference nebyly v tomto sezení zmíněny.</p>
+					</section>
+
+					<section class="note-section">
+						<h3>Plán</h3>
+						<ul>
+							<li>Před příští poradou pět minut použít zpomalené dýchání a uzemnění.</li>
+							<li>Na poradě představit jeden předem připravený bod.</li>
+							<li>Zapsat očekávaný průběh a míru úzkosti před poradou a skutečný výsledek po ní; záznam projít na příštím sezení.</li>
+						</ul>
+						<p>Doporučení k další službě ani krizové kroky nebyly domluveny.</p>
+					</section>
+				</div>
+			</article>
+
+			<article class="format-panel" id="panel-dap" role="tabpanel" aria-labelledby="tab-dap" tabindex="0" data-panel="dap" hidden>
+				<header class="format-heading">
+					<div>
+						<p class="format-heading__type">Tříčástový klinický zápis</p>
+						<h2>DAP</h2>
+						<p>Spojuje informace ze sezení do tří částí: data, hodnocení a plán.</p>
+					</div>
+					<span class="word-count" data-word-count-for="dap" aria-live="polite"></span>
+				</header>
+
+				<div class="note-body" data-note-body="dap">
+					<section class="note-section">
+						<h3>D — Data</h3>
+						<p>Klientka, 34 let, popsala úzkost před pracovní poradou, doprovázenou napětím, zrychleným dýcháním, myšlenkou „zablokuji se“ a chutí účast zrušit. Použila zpomalené dýchání a uzemnění, na poradě zůstala a položila připravenou otázku; úzkost poklesla ze 7/10 na 4/10. Na příští týden má krátkou prezentaci a kolegyně nabídla společnou přípravu. CORE-10 se změnil z 1,6 na 0,9 a WHO-5 z 2,2 na 2,8. SRS-3-B: nápomocné reakce 3,9/5, brzdící 1,5/5. Klientka popřela sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek.</p>
+					</section>
+					<section class="note-section">
+						<h3>A — Hodnocení (Assessment)</h3>
+						<p>Anticipační představa selhání může zesilovat tělesnou úzkost a tendenci vyhnout se skupinovým situacím. Dokončená porada a příznivý posun dotazníků ukazují na pokrok v používání strategií a tolerování úzkosti. Akutní riziko nebylo zachyceno.</p>
+					</section>
+					<section class="note-section">
+						<h3>P — Plán (Plan)</h3>
+						<p>Před příští poradou klientka pět minut použije zpomalené dýchání a uzemnění, představí jeden připravený bod a zaznamená očekávání i úzkost před situací a skutečný výsledek po ní. Záznam bude probrán na příštím sezení. Doporučení k další službě ani krizový plán nebyly domluveny.</p>
+					</section>
+				</div>
+			</article>
+
+			<article class="format-panel" id="panel-dekurz" role="tabpanel" aria-labelledby="tab-dekurz" tabindex="0" data-panel="dekurz" hidden>
+				<header class="format-heading">
+					<div>
+						<p class="format-heading__type">Stručný ambulantní záznam</p>
+						<h2>Dekurz</h2>
+						<p>Spojuje průběh, pracovní závěr a domluvený postup do jednoho souvislého textu.</p>
+					</div>
+					<span class="word-count" data-word-count-for="dekurz" aria-live="polite"></span>
+				</header>
+
+				<dl class="dekurz-meta">
+					<div><dt>Pacientka</dt><dd>Jana N. (demo)</dd></div>
+					<div><dt>Datum</dt><dd>ukázkové sezení</dd></div>
+					<div><dt>Diagnóza</dt><dd>pro ukázku nestanovena</dd></div>
+					<div><dt>Poskytovatel</dt><dd>demo pracoviště</dd></div>
+				</dl>
+
+				<div class="note-body note-body--narrative" data-note-body="dekurz">
+					<p>Klientka, 34 let, v individuální psychoterapii popsala anticipační úzkost před pracovní poradou s napětím, zrychleným dýcháním, obavou ze zablokování a tendencí účast zrušit. Použila zpomalené dýchání a uzemnění, na poradě zůstala a položila připravenou otázku; intenzita úzkosti poklesla ze 7/10 na 4/10. CORE-10 se změnil z 1,6 na 0,9 a WHO-5 z 2,2 na 2,8, tedy příznivým směrem; statistická spolehlivost změny nebyla posouzena. Sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek klientka výslovně popřela, známky akutního ohrožení nebyly zachyceny. V sezení byl zmapován vztah mezi očekáváním selhání, tělesnou reakcí a vyhýbáním, ověřeny důkazy pro obávaný výsledek a nacvičen začátek krátké prezentace. Klientka označila plán za proveditelný. Do příštího sezení použije před poradou pět minut zpomalené dýchání a uzemnění, představí jeden připravený bod a zapíše očekávání, míru úzkosti a skutečný výsledek. Záznam bude společně vyhodnocen příště. Další služba ani krizový plán nebyly domluveny.</p>
+				</div>
+			</article>
+
+			<article class="format-panel" id="panel-girp" role="tabpanel" aria-labelledby="tab-girp" tabindex="0" data-panel="girp" hidden>
+				<header class="format-heading">
+					<div>
+						<p class="format-heading__type">Zápis zaměřený na cíl a odezvu</p>
+						<h2>GIRP</h2>
+						<p>Organizuje sezení podle cíle, intervence terapeuta, reakce klientky a dalšího plánu.</p>
+					</div>
+					<span class="word-count" data-word-count-for="girp" aria-live="polite"></span>
+				</header>
+
+				<div class="note-body" data-note-body="girp">
+					<section class="note-section">
+						<h3>G — Cíl (Goal)</h3>
+						<p>Zvýšit schopnost klientky mluvit při pracovních setkáních i za přítomnosti úzkosti a postupně omezovat vyhýbání skupinovým situacím. Aktuálním krokem je krátká prezentace na poradě v příštím týdnu.</p>
+					</section>
+					<section class="note-section">
+						<h3>I — Intervence (Intervention)</h3>
+						<p>Terapeut s klientkou zmapoval vztah mezi očekáváním „zablokuji se“, tělesným napětím a nutkáním situaci zrušit. Společně porovnali obávaný a skutečný průběh poslední porady, nacvičili úvodní větu prezentace a připravili stupňovaný expoziční krok.</p>
+					</section>
+					<section class="note-section">
+						<h3>R — Reakce (Response)</h3>
+						<p>Klientka rozpoznala, že na minulé poradě dokázala zůstat a promluvit navzdory úzkosti, která klesla ze 7/10 na 4/10. Nácvik označila za užitečný a plán za proveditelný. CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8. Klientka výslovně popřela sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek; akutní riziko nebylo zachyceno.</p>
+					</section>
+					<section class="note-section">
+						<h3>P — Plán (Plan)</h3>
+						<p>Před poradou použít pět minut zpomalené dýchání a uzemnění, představit jeden připravený bod a zapsat očekávání a úzkost před situací i skutečný výsledek po ní. Záznam projít na příštím sezení. Doporučení k další službě ani krizový plán nebyly domluveny.</p>
+					</section>
+				</div>
+			</article>
+		</section>
+
+		<p class="closing-note">Ukázka slouží pouze k porovnání struktury zápisu. Všechny varianty vycházejí ze stejného fiktivního podkladu.</p>
+	</main>
+
+	<footer class="site-footer">
+		<div class="shell">DeePsy · prototyp pro výzkumnou diskusi · fiktivní demonstrační data</div>
+	</footer>
+</body>
+</html>
