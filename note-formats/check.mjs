@@ -34,6 +34,14 @@ for (const format of ["deepsy", "dap", "dekurz", "girp"]) {
 
 assert.equal((html.match(/role="tab"/g) || []).length, 4);
 assert.equal((html.match(/role="tabpanel"/g) || []).length, 4);
+assert.ok(html.indexOf('id="tab-deepsy"') < html.indexOf('id="tab-dap"'));
+assert.ok(html.indexOf('id="tab-dap"') < html.indexOf('id="tab-girp"'));
+assert.ok(html.indexOf('id="tab-girp"') < html.indexOf('id="tab-dekurz"'));
+assert.ok(html.indexOf('class="source-notice') > html.indexOf('id="panel-girp"'));
+assert.doesNotMatch(html, /word-count|data-word-count-for/, "Počty slov nemají být veřejně zobrazené");
+assert.doesNotMatch(html, /<h3>[DAGIRP]\s+—/, "Nadpisy sekcí nemají obsahovat písmeno zkratky");
+assert.match(html, /Zkratka DAP označuje Data, Assessment \(hodnocení\) a Plan \(plán\)/);
+assert.match(html, /Zkratka GIRP označuje Goal \(cíl\), Intervention \(intervence\), Response \(reakce\) a Plan \(plán\)/);
 
 const forbidden = [
 	[/Konstrukty|Fenomény/i, "zakázaná sekce"],
@@ -59,10 +67,19 @@ assert.ok(dekurzMatch, "Text dekurzu nebyl nalezen");
 const dekurzWords = countWords(stripMarkup(dekurzMatch[1]));
 assert.ok(dekurzWords <= 200, `Dekurz má ${dekurzWords} slov; maximum je 200`);
 
+const formatWords = {};
+for (const format of ["dap", "girp"]) {
+	const match = html.match(new RegExp(`<div class="note-body" data-note-body="${format}">([\\s\\S]*?)<\\/div>`));
+	assert.ok(match, `Text formátu ${format.toUpperCase()} nebyl nalezen`);
+	const words = countWords(stripMarkup(match[1]));
+	formatWords[format] = words;
+	assert.ok(words >= 300 && words <= 350, `${format.toUpperCase()} má ${words} slov; očekáváno je 300–350`);
+}
+
 assert.match(js, /ArrowLeft/);
 assert.match(js, /ArrowRight/);
 assert.match(js, /Home/);
 assert.match(js, /End/);
 assert.match(js, /history\.replaceState/);
 
-console.log(`Kontrola prošla. Dekurz: ${dekurzWords} slov.`);
+console.log(`Kontrola prošla. DAP: ${formatWords.dap}, GIRP: ${formatWords.girp}, dekurz: ${dekurzWords} slov.`);

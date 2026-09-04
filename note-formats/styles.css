@@ -162,6 +162,10 @@ body {
 	line-height: 1.55;
 }
 
+.source-notice--footer {
+	margin-top: 28px;
+}
+
 .format-tabs {
 	display: flex;
 	gap: 2px;
@@ -259,18 +263,6 @@ body {
 	color: var(--deepsy-muted);
 }
 
-.word-count {
-	flex: 0 0 auto;
-	margin-top: 4px;
-	padding: 5px 10px;
-	border: 1px solid #c9e8ed;
-	border-radius: 999px;
-	background: var(--deepsy-soft);
-	color: var(--deepsy-deep);
-	font-size: 12px;
-	font-weight: 600;
-}
-
 .note-body {
 	max-width: 790px;
 }
@@ -339,6 +331,13 @@ body {
 
 .dekurz-meta dd {
 	margin: 0;
+}
+
+.dekurz-privacy {
+	max-width: 790px;
+	margin: -16px 0 28px;
+	color: var(--deepsy-muted);
+	font-size: 12px;
 }
 
 .note-body--narrative {
