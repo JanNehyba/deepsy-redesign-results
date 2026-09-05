@@ -96,6 +96,15 @@ assert.equal(dataItems.length, 6, "Každá podsekce Data má obsahovat právě j
 assert.ok(dataItems.every((words) => words <= 28), `Některá odrážka Data překročila 28 slov: ${dataItems.join(", ")}`);
 assert.doesNotMatch(deepsyMatch[1], /Průběh od minulého sezení|Práce v sezení|Přetrvávající obtíže/);
 
+const hypothesesSection = deepsyMatch[1].match(/<h3>Hodnocení — klinické hypotézy<\/h3>([\s\S]*?)<\/section>/);
+assert.ok(hypothesesSection, "Sekce Klinické hypotézy nebyla nalezena");
+const hypothesisPerspectives = Array.from(
+	hypothesesSection[1].matchAll(/<strong>Přístup:<\/strong>\s*([^.<]+)/g),
+	(match) => match[1].trim(),
+);
+assert.equal(hypothesisPerspectives.length, 3, "Demo má obsahovat tři klinické hypotézy");
+assert.equal(new Set(hypothesisPerspectives).size, 3, "Každá hypotéza má použít jinou terapeutickou perspektivu");
+
 const dekurzMatch = html.match(/<div class="note-body note-body--narrative" data-note-body="dekurz">([\s\S]*?)<\/div>/);
 assert.ok(dekurzMatch, "Text dekurzu nebyl nalezen");
 const dekurzWords = countWords(stripMarkup(dekurzMatch[1]));
