@@ -62,6 +62,40 @@ for (const asset of html.matchAll(/(?:src|href)="(assets\/[^"#?]+)"/g)) {
 	await access(join(directory, asset[1]));
 }
 
+const deepsyMatch = html.match(/<div class="note-body" data-note-body="deepsy">([\s\S]*?)<\/div>/);
+assert.ok(deepsyMatch, "Plný zápis DeePsy nebyl nalezen");
+const deepsyWords = countWords(stripMarkup(deepsyMatch[1]));
+assert.ok(deepsyWords >= 600 && deepsyWords <= 700, `Plný zápis DeePsy má ${deepsyWords} slov; očekáváno je 600–700`);
+assert.deepEqual(
+	Array.from(deepsyMatch[1].matchAll(/<h3>([^<]+)<\/h3>/g), (match) => match[1]),
+	[
+		"Data",
+		"Hodnocení — sumarizace dotazníků",
+		"Hodnocení — hodnocení rizika",
+		"Hodnocení — klinické hypotézy",
+		"Hodnocení — hodnocení změny/progresu",
+		"Hodnocení — terapeutická aliance",
+		"Plán",
+	],
+);
+const dataSection = deepsyMatch[1].match(/<section class="note-section">([\s\S]*?)<\/section>/);
+assert.ok(dataSection, "Sekce Data nebyla nalezena");
+assert.deepEqual(
+	Array.from(dataSection[1].matchAll(/<h4>([^<]+)<\/h4>/g), (match) => match[1]),
+	[
+		"Hlavní témata",
+		"Problémy a symptomy",
+		"Terapeutické cíle",
+		"Zdroje a silné stránky klienta",
+		"Důležité osoby",
+		"Důležité události a data",
+	],
+);
+const dataItems = Array.from(dataSection[1].matchAll(/<li>([\s\S]*?)<\/li>/g), (match) => countWords(stripMarkup(match[1])));
+assert.equal(dataItems.length, 6, "Každá podsekce Data má obsahovat právě jednu odrážku");
+assert.ok(dataItems.every((words) => words <= 28), `Některá odrážka Data překročila 28 slov: ${dataItems.join(", ")}`);
+assert.doesNotMatch(deepsyMatch[1], /Průběh od minulého sezení|Práce v sezení|Přetrvávající obtíže/);
+
 const dekurzMatch = html.match(/<div class="note-body note-body--narrative" data-note-body="dekurz">([\s\S]*?)<\/div>/);
 assert.ok(dekurzMatch, "Text dekurzu nebyl nalezen");
 const dekurzWords = countWords(stripMarkup(dekurzMatch[1]));
@@ -82,4 +116,4 @@ assert.match(js, /Home/);
 assert.match(js, /End/);
 assert.match(js, /history\.replaceState/);
 
-console.log(`Kontrola prošla. DAP: ${formatWords.dap}, GIRP: ${formatWords.girp}, dekurz: ${dekurzWords} slov.`);
+console.log(`Kontrola prošla. DeePsy: ${deepsyWords}, DAP: ${formatWords.dap}, GIRP: ${formatWords.girp}, dekurz: ${dekurzWords} slov.`);
