@@ -354,6 +354,22 @@ body {
 	color: var(--deepsy-cyan-dark);
 }
 
+/* Hypotéza má tři části a čtou se každá jinak, proto každá na svůj řádek.
+   V jednom odstavci se popisky ztratily a odrážka vypadala jako zeď textu. */
+.hypothesis-line {
+	display: block;
+}
+
+.hypothesis-line + .hypothesis-line {
+	margin-top: 3px;
+}
+
+.note-section li .hypothesis-line--approach {
+	color: var(--deepsy-deep);
+	font-weight: 700;
+	letter-spacing: .02em;
+}
+
 .dekurz-meta {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));

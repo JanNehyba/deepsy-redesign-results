@@ -83,7 +83,7 @@ for (const asset of html.matchAll(/(?:src|href)="(assets\/[^"#?]+)"/g)) {
 
 const deepsyBody = noteBody("deepsy");
 const deepsyWords = countWords(stripMarkup(deepsyBody));
-assert.ok(deepsyWords >= 600 && deepsyWords <= 700, `Plný zápis DeePsy má ${deepsyWords} slov; očekáváno je 600–700`);
+assert.ok(deepsyWords >= 750 && deepsyWords <= 900, `Plný zápis DeePsy má ${deepsyWords} slov; očekáváno je 750–900`);
 assert.deepEqual(
 	Array.from(deepsyBody.matchAll(/<h3>([^<]+)<\/h3>/g), (match) => match[1]),
 	[
@@ -120,8 +120,26 @@ const hypothesisPerspectives = Array.from(
 	hypothesesSection[1].matchAll(/<strong>Přístup:<\/strong>\s*([^.<]+)/g),
 	(match) => match[1].trim(),
 );
-assert.equal(hypothesisPerspectives.length, 3, "Demo má obsahovat tři klinické hypotézy");
-assert.equal(new Set(hypothesisPerspectives).size, 3, "Každá hypotéza má použít jinou terapeutickou perspektivu");
+assert.equal(hypothesisPerspectives.length, 4, "Demo má obsahovat čtyři klinické hypotézy");
+assert.equal(new Set(hypothesisPerspectives).size, 4, "Každá hypotéza má použít jinou terapeutickou perspektivu");
+assert.deepEqual(
+	hypothesisPerspectives.slice().sort(),
+	["Existenciální", "Kognitivně-behaviorální", "Psychodynamický", "Systemický"],
+	"Demo má ukázat všechny čtyři perspektivy, které prompt vyjmenovává",
+);
+
+// Tři části hypotézy se čtou každá jinak. Když splynou do jednoho odstavce, je
+// z odrážky zeď textu a popisky se v ní ztratí — to se jednou už stalo.
+const hypothesisItems = Array.from(hypothesesSection[1].matchAll(/<li>([\s\S]*?)<\/li>/g), (match) => match[1]);
+assert.equal(hypothesisItems.length, 4, "Sekce hypotéz má mít čtyři odrážky");
+for (const item of hypothesisItems) {
+	assert.equal(
+		(item.match(/class="hypothesis-line/g) || []).length,
+		3,
+		"Přístup, Hypotéza a Zdůvodnění mají být každý na vlastním řádku",
+	);
+}
+assert.match(css, /\.hypothesis-line\s*\{[^}]*display:\s*block/, "Řádky hypotézy musí být blokové");
 
 const dekurzWords = countWords(stripMarkup(noteBody("dekurz")));
 assert.ok(dekurzWords <= 200, `Dekurz má ${dekurzWords} slov; maximum je 200`);

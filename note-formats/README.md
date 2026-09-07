@@ -1,7 +1,7 @@
 # Prototyp formátů terapeutického zápisu
 
 Statická výzkumná ukázka čtyř způsobů zápisu jednoho fiktivního sezení:
-plný zápis DeePsy, DAP, dekurz a GIRP.
+plný zápis DeePsy, DAP, SIRP a dekurz.
 
 ## Ochrana zdroje
 
@@ -9,6 +9,11 @@ Veřejný případ je nová fiktivní kompozice tematicky inspirovaná pátým s
 interní demo epizody. Neobsahuje zdrojový přepis, mapování na původní veřejná
 videa ani jejich unikátní sled událostí. Změněny byly identifikační,
 biografické, situační i další klinicky nepodstatné detaily.
+
+Sekce „Klinické hypotézy" v plném zápisu DeePsy je doslovný výstup modelu
+`deepseek-v4-flash` nad revidovaným promptem, ne ručně psaná ilustrace. Vstupem
+byl fiktivní přepis složený k tomuto případu; přepis sám se nezveřejňuje.
+Ostatní sekce zůstávají ručně psané.
 
 Dotazníkové hodnoty byly vytvořeny z nových odpovědí a spočítány existujícím
 skórovacím algoritmem DeePsy:
