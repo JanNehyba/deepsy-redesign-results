@@ -153,6 +153,17 @@ assert.equal(
 assert.doesNotMatch(noteBody("dap"), /<ul>/, "Souvislá podoba DAP nemá obsahovat odrážky");
 assert.doesNotMatch(noteBody("dap-bullets"), /<p>/, "Odrážková podoba DAP nemá obsahovat odstavce");
 
+// Souvislá podoba má v každé sekci nejvýše dva odstavce. Kdyby se odrážková podoba
+// rozdrobila, neporovnávala by se forma, ale míra drobení.
+const bulletSections = Array.from(
+	noteBody("dap-bullets").matchAll(/<h3>([^<]+)<\/h3>([\s\S]*?)<\/section>/g),
+	(match) => [match[1], (match[2].match(/<li>/g) || []).length],
+);
+assert.equal(bulletSections.length, 3, "Odrážková podoba DAP má mít sekce Data, Hodnocení a Plán");
+for (const [heading, count] of bulletSections) {
+	assert.ok(count <= 6, `Sekce ${heading} v odrážkové podobě DAP má ${count} odrážek; maximum je 6`);
+}
+
 // Poznámka pro tým je sbalená a nese důvody výběru formátů.
 const rationale = html.match(/<details class="format-rationale">([\s\S]*?)<\/details>/);
 assert.ok(rationale, "Poznámka k výběru formátů nebyla nalezena");
