@@ -227,7 +227,8 @@ body {
 	box-shadow: 0 16px 44px rgba(0, 22, 27, 0.25);
 }
 
-.format-panel[hidden] {
+.format-panel[hidden],
+.note-body[hidden] {
 	display: none;
 }
 
@@ -261,6 +262,51 @@ body {
 	max-width: 680px;
 	margin: 0;
 	color: var(--deepsy-muted);
+}
+
+.variant-switch {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 2px;
+	margin: -18px 0 28px;
+	padding: 4px;
+	background: var(--deepsy-soft);
+	border: 1px solid var(--deepsy-line);
+}
+
+.variant-switch__label {
+	margin: 0 12px 0 8px;
+	color: var(--deepsy-muted);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+}
+
+.variant-switch button {
+	padding: 8px 18px;
+	border: 0;
+	background: transparent;
+	color: var(--deepsy-cyan-dark);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	transition: color 160ms ease, background 160ms ease;
+}
+
+.variant-switch button:hover {
+	background: rgba(0, 183, 214, 0.14);
+}
+
+.variant-switch button[aria-pressed="true"] {
+	background: var(--deepsy-deep);
+	color: var(--deepsy-white);
+}
+
+.variant-switch button:focus-visible {
+	outline: 3px solid #ffe08a;
+	outline-offset: 2px;
 }
 
 .note-body {
@@ -352,6 +398,62 @@ body {
 	text-align: center;
 }
 
+.format-rationale {
+	margin: 16px 0 4px;
+	color: rgba(255, 255, 255, 0.78);
+	font-size: 13px;
+}
+
+.format-rationale summary {
+	display: inline-block;
+	padding: 4px 0;
+	color: rgba(255, 255, 255, 0.52);
+	font-size: 12px;
+	letter-spacing: 0.05em;
+	cursor: pointer;
+	transition: color 160ms ease;
+}
+
+.format-rationale summary:hover {
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.format-rationale summary:focus-visible {
+	outline: 3px solid #ffe08a;
+	outline-offset: 2px;
+}
+
+.format-rationale > div {
+	margin-top: 10px;
+	padding: 18px 20px;
+	border-left: 3px solid var(--deepsy-cyan);
+	background: var(--deepsy-dark-panel);
+	line-height: 1.62;
+}
+
+.format-rationale p,
+.format-rationale ul {
+	margin: 0 0 12px;
+}
+
+.format-rationale ul {
+	padding-left: 20px;
+}
+
+.format-rationale li {
+	margin-bottom: 8px;
+}
+
+.format-rationale strong {
+	color: #75deef;
+	font-weight: 600;
+}
+
+.format-rationale > div > :last-child,
+.format-rationale li:last-child {
+	margin-bottom: 0;
+}
+
 .site-footer {
 	padding: 28px 0;
 	background: rgba(0, 44, 53, 0.88);
@@ -400,6 +502,10 @@ body {
 		padding: 24px 20px;
 	}
 
+	.variant-switch button {
+		flex: 1 0 auto;
+	}
+
 	.format-heading {
 		flex-direction: column;
 		gap: 12px;
@@ -415,7 +521,8 @@ body {
 		scroll-behavior: auto;
 	}
 
-	.format-tab {
+	.format-tab,
+	.variant-switch button {
 		transition: none;
 	}
 }

@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="noindex, nofollow, noarchive">
-	<meta name="description" content="Výzkumný prototyp porovnávající čtyři formáty terapeutického zápisu na jednom fiktivním případu.">
+	<meta name="description" content="Výzkumný prototyp porovnávající čtyři formáty terapeutického zápisu na jednom fiktivním případu; DAP je k dispozici v souvislém textu i v odrážkách.">
 	<meta name="theme-color" content="#004e5c">
 	<title>Ukázka formátů terapeutického zápisu — DeePsy</title>
 	<link rel="icon" type="image/png" href="assets/favicon-32x32.png">
@@ -25,7 +25,7 @@
 		<section class="intro" aria-labelledby="page-title">
 			<p class="eyebrow">Porovnání formátů terapeutického zápisu</p>
 			<h1 id="page-title">5. sezení — Jana N. <span>(demo)</span></h1>
-			<p class="intro__lead">Čtyři způsoby zápisu stejného fiktivního sezení. Přepínejte mezi formáty a porovnejte jejich přehlednost, rozsah a praktickou použitelnost.</p>
+			<p class="intro__lead">Čtyři formáty zápisu stejného fiktivního sezení. Přepínejte mezi nimi a porovnejte jejich přehlednost, rozsah a praktickou použitelnost. U formátu DAP lze navíc přepnout mezi souvislým textem a odrážkami.</p>
 		</section>
 
 		<div class="format-tabs" role="tablist" aria-label="Formáty terapeutického zápisu">
@@ -35,8 +35,8 @@
 			<button class="format-tab" id="tab-dap" type="button" role="tab" aria-selected="false" aria-controls="panel-dap" tabindex="-1" data-format="dap">
 				<span>DAP</span>
 			</button>
-			<button class="format-tab" id="tab-girp" type="button" role="tab" aria-selected="false" aria-controls="panel-girp" tabindex="-1" data-format="girp">
-				<span>GIRP</span>
+			<button class="format-tab" id="tab-sirp" type="button" role="tab" aria-selected="false" aria-controls="panel-sirp" tabindex="-1" data-format="sirp">
+				<span>SIRP</span>
 			</button>
 			<button class="format-tab" id="tab-dekurz" type="button" role="tab" aria-selected="false" aria-controls="panel-dekurz" tabindex="-1" data-format="dekurz">
 				<span>Dekurz</span>
@@ -87,13 +87,13 @@
 						<h4>Aktuální skóry</h4>
 						<ul>
 							<li>CORE-10: 0,9/4, neklinické pásmo; nižší hodnota znamená menší celkový distres.</li>
-							<li>WHO-5: 2,8/5, bez přiřazeného klinického pásma v dodaných datech; vyšší hodnota znamená lepší duševní pohodu.</li>
-							<li>SRS-3-B: nápomocné reakce 3,9/5 a brzdící reakce 1,5/5, bez přiřazeného klinického pásma.</li>
+							<li>WHO-5: 2,8/5; vyšší hodnota znamená lepší duševní pohodu.</li>
+							<li>SRS-3-B: nápomocné reakce 3,9/5 a brzdící reakce 1,5/5.</li>
 						</ul>
 						<h4>Analýza změny</h4>
-						<p>CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8. Obě změny mají příznivý směr; informace o statistické spolehlivosti změny není k dispozici.</p>
+						<p>CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8. Obě změny mají příznivý směr a odpovídají průběhu, který klientka v sezení popsala.</p>
 						<h4>Klinická interpretace</h4>
-						<p>Výsledky CORE-10 a WHO-5 ukazují souběžný příznivý trend. Profil SRS-3-B zachycuje převahu nápomocných nad brzdícími reakcemi; bez výpočtu spolehlivosti nelze změnu označit za spolehlivou. Dotazníky samy o sobě neurčují diagnózu ani příčinu změny.</p>
+						<p>Výsledky CORE-10 a WHO-5 ukazují souběžný příznivý trend v celkovém distresu i v duševní pohodě. Profil SRS-3-B zachycuje převahu nápomocných reakcí nad brzdícími, což odpovídá tomu, jak klientka sezení hodnotila.</p>
 					</section>
 
 					<section class="note-section">
@@ -105,7 +105,7 @@
 						<h4>Riziko užívání návykových látek</h4>
 						<p>Klientka výslovně popřela rizikové užívání návykových látek; další podklady o škodlivém užívání nebyly zachyceny.<br><strong>Závažnost:</strong> Žádné aktuálně zachycené riziko.</p>
 						<h4>Bezpečnostní plán</h4>
-						<p>Krizová opatření, ochranné kroky ani krizové kontakty nebyly v tomto sezení diskutovány. Z absence bezpečnostního plánu není vyvozován další klinický závěr.</p>
+						<p>Krizová opatření, ochranné kroky ani krizové kontakty nebyly v tomto sezení diskutovány.</p>
 					</section>
 
 					<section class="note-section">
@@ -131,11 +131,11 @@
 					<section class="note-section">
 						<h3>Hodnocení — terapeutická aliance</h3>
 						<h4>Kvalita aliance</h4>
-						<p>Skóry SRS-3-B naznačují převážně příznivé hodnocení sezení; samotné skóry však nestačí k celkovému závěru o kvalitě vztahu.</p>
+						<p>Skóry SRS-3-B naznačují převážně příznivé hodnocení sezení a shodují se s tím, jak klientka o společné práci mluvila.</p>
 						<h4>Spolupráce na cílech a úkolech</h4>
 						<p>Klientka označila společný rozbor a nácvik za užitečné a plán představit jeden bod na příští poradě za proveditelný.</p>
 						<h4>Brzdící faktory</h4>
-						<p>Nízká míra brzdících reakcí v SRS-3-B nenaznačuje výraznou překážku spolupráce; jiné konkrétní brzdící faktory nebyly v podkladech zachyceny.</p>
+						<p>Nízká míra brzdících reakcí v SRS-3-B nenaznačuje výraznou překážku spolupráce.</p>
 					</section>
 
 					<section class="note-section">
@@ -155,11 +155,17 @@
 					<div>
 						<p class="format-heading__type">Tříčástový klinický zápis</p>
 						<h2>DAP</h2>
-						<p>Zkratka DAP označuje Data, Assessment (hodnocení) a Plan (plán); formát spojuje průběh sezení, klinické zhodnocení a další postup.</p>
+						<p>Zkratka DAP označuje Data, Assessment (hodnocení) a Plan (plán); formát spojuje průběh sezení, klinické zhodnocení a další postup. Obě podoby níže obsahují stejná fakta a liší se pouze formou.</p>
 					</div>
 				</header>
 
-				<div class="note-body" data-note-body="dap">
+				<div class="variant-switch" data-variant-switch="dap" role="group" aria-label="Podoba zápisu DAP">
+					<span class="variant-switch__label">Podoba zápisu</span>
+					<button type="button" data-variant="prose" aria-pressed="true">Souvislý text</button>
+					<button type="button" data-variant="bullets" aria-pressed="false">Odrážky</button>
+				</div>
+
+				<div class="note-body" data-note-body="dap" data-body-variant="prose">
 					<section class="note-section">
 						<h3>Data</h3>
 						<p>Klientka, 34 let, při pátém individuálním sezení popsala úzkost spojenou s mluvením na pracovních poradách. Před poslední poradou zaznamenala napětí, zrychlené dýchání, myšlenku „zablokuji se“ a nutkání účast zrušit. Přesto na poradu přišla. Před vstupem použila zpomalené dýchání a uzemnění, během jednání zůstala v místnosti a položila jednu předem připravenou otázku. Intenzitu úzkosti hodnotila před situací jako 7/10 a po jejím zvládnutí jako 4/10; obávané zablokování nenastalo.</p>
@@ -168,7 +174,74 @@
 					<section class="note-section">
 						<h3>Hodnocení</h3>
 						<p>Anticipační představa selhání může zesilovat tělesnou úzkost a podporovat vyhýbání. Zkušenost z dokončené porady naopak ukazuje, že klientka dokáže použít připravené strategie, zůstat v náročné situaci a aktivně promluvit i bez úplného odeznění úzkosti. Pokles úzkosti v průběhu situace a rozdíl mezi obávaným a skutečným výsledkem představují podklad pro další postupné vystavování podobným situacím.</p>
-						<p>CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8; oba ukazatele se změnily příznivým směrem, statistická spolehlivost změny však nebyla posouzena. SRS-3-B zachytil nápomocné reakce 3,9/5 a brzdící reakce 1,5/5, bez výrazného signálu potíží ve spolupráci. Klientka výslovně popřela sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek. Známky akutního ohrožení nebyly zachyceny.</p>
+						<p>CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8; oba ukazatele se změnily příznivým směrem. SRS-3-B zachytil nápomocné reakce 3,9/5 a brzdící reakce 1,5/5, bez výrazného signálu potíží ve spolupráci. Klientka výslovně popřela sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek. Známky akutního ohrožení nebyly zachyceny.</p>
+					</section>
+					<section class="note-section">
+						<h3>Plán</h3>
+						<p>Před příští poradou klientka pět minut použije zpomalené dýchání a uzemnění. Na poradě představí jeden předem připravený bod. Před situací zapíše očekávaný průběh a míru úzkosti, po poradě skutečný výsledek; záznam společně projdou na příštím sezení. Doporučení k další službě ani krizový plán nebyly domluveny.</p>
+					</section>
+				</div>
+
+				<div class="note-body" data-note-body="dap-bullets" data-body-variant="bullets" hidden>
+					<section class="note-section">
+						<h3>Data</h3>
+						<ul>
+							<li>Klientka, 34 let, páté individuální sezení; tématem je úzkost spojená s mluvením na pracovních poradách.</li>
+							<li>Před poslední poradou napětí, zrychlené dýchání, myšlenka „zablokuji se“ a nutkání účast zrušit; na poradu přesto přišla.</li>
+							<li>Před vstupem použila zpomalené dýchání a uzemnění, během jednání zůstala v místnosti a položila jednu předem připravenou otázku.</li>
+							<li>Intenzitu úzkosti hodnotila před situací jako 7/10 a po jejím zvládnutí jako 4/10; obávané zablokování nenastalo.</li>
+							<li>V sezení zmapována souvislost mezi očekáváním selhání, tělesnou reakcí a nutkáním situaci se vyhnout.</li>
+							<li>Porovnán obávaný a skutečný průběh porady; nacvičena úvodní věta krátké prezentace na týmovou poradu v příštím týdnu.</li>
+							<li>Kolegyně nabídla, že s klientkou prezentaci předem projde; společný rozbor i nácvik označila klientka za užitečné.</li>
+							<li>Cílem zůstává mluvit při pracovních setkáních i za přítomnosti úzkosti a postupně omezovat vyhýbání skupinovým situacím.</li>
+						</ul>
+					</section>
+					<section class="note-section">
+						<h3>Hodnocení</h3>
+						<ul>
+							<li>Anticipační představa selhání může zesilovat tělesnou úzkost a podporovat vyhýbání skupinovým situacím.</li>
+							<li>Dokončená porada naopak ukazuje, že klientka dokáže použít připravené strategie a promluvit i bez úplného odeznění úzkosti.</li>
+							<li>Pokles úzkosti v průběhu situace a rozdíl mezi obávaným a skutečným výsledkem tvoří podklad pro další postupné vystavování.</li>
+							<li>CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8; oba ukazatele se změnily příznivým směrem.</li>
+							<li>SRS-3-B zachytil nápomocné reakce 3,9/5 a brzdící reakce 1,5/5, bez výrazného signálu potíží ve spolupráci.</li>
+							<li>Klientka výslovně popřela sebevražedné myšlenky, sebepoškozování i rizikové užívání návykových látek; známky akutního ohrožení nebyly zachyceny.</li>
+						</ul>
+					</section>
+					<section class="note-section">
+						<h3>Plán</h3>
+						<ul>
+							<li>Před příští poradou pět minut zpomalené dýchání a uzemnění.</li>
+							<li>Na poradě představit jeden předem připravený bod.</li>
+							<li>Před situací zapsat očekávaný průběh a míru úzkosti, po poradě skutečný výsledek.</li>
+							<li>Záznam společně projít na příštím sezení.</li>
+							<li>Doporučení k další službě ani krizový plán nebyly domluveny.</li>
+						</ul>
+					</section>
+				</div>
+			</article>
+
+			<article class="format-panel" id="panel-sirp" role="tabpanel" aria-labelledby="tab-sirp" tabindex="0" data-panel="sirp" hidden>
+				<header class="format-heading">
+					<div>
+						<p class="format-heading__type">Zápis zaměřený na situaci a odezvu</p>
+						<h2>SIRP</h2>
+						<p>Zkratka SIRP označuje Situation (situace), Intervention (intervence), Response (reakce) a Plan (plán); na začátku stojí situace tak, jak ji podává klient, a zápis pak sleduje práci v sezení, odezvu klientky a další postup.</p>
+					</div>
+				</header>
+
+				<div class="note-body" data-note-body="sirp">
+					<section class="note-section">
+						<h3>Situace</h3>
+						<p>Klientka, 34 let, přišla na páté individuální sezení s tématem, které sama označila za nejtíživější: mluvení na pracovních poradách. Popsala, že před poslední poradou cítila napětí, zrychlilo se jí dýchání a vracela se myšlenka „zablokuji se“; zvažovala, že účast zruší. Na poradu nakonec přišla, před vstupem pět minut zpomaleně dýchala a použila uzemnění. Během jednání zůstala v místnosti a položila jednu předem připravenou otázku. Intenzitu úzkosti hodnotila před situací jako 7/10 a po jejím zvládnutí jako 4/10; obávané zablokování nenastalo. Sama dodala, že ji překvapilo, jak se očekávání rozešlo se skutečným průběhem. V příštím týdnu ji čeká krátká prezentace na týmové poradě a kolegyně jí nabídla, že s ní její začátek předem projde.</p>
+					</section>
+					<section class="note-section">
+						<h3>Intervence</h3>
+						<p>Terapeut s klientkou zmapoval posloupnost spouštěče, očekávání „zablokuji se“, tělesného napětí, zrychleného dýchání a nutkání účast zrušit. Společně porovnali obávaný a skutečný průběh poslední porady a pojmenovali kroky, které klientce pomohly v situaci zůstat. Následoval nácvik úvodní věty připravované prezentace. Zpomalené dýchání a uzemnění byly potvrzeny jako krátká příprava před poradou a do přípravy byla zahrnuta i nabídka kolegyně.</p>
+					</section>
+					<section class="note-section">
+						<h3>Reakce</h3>
+						<p>Klientka rozpoznala rozdíl mezi původním očekáváním a skutečným výsledkem a formulovala úvodní větu nahlas. Nácvik označila za užitečný a navržený krok za proveditelný.</p>
+						<p>CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8; oba výsledky se posunuly příznivým směrem. SRS-3-B zachytil nápomocné reakce 3,9/5 a brzdící reakce 1,5/5, tedy bez výrazného signálu obtíží ve spolupráci. Klientka výslovně popřela sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek. Známky akutního ohrožení nebyly zachyceny.</p>
 					</section>
 					<section class="note-section">
 						<h3>Plán</h3>
@@ -198,37 +271,7 @@
 				<p class="dekurz-privacy">Rodné číslo ani jiné přímé identifikátory se ve veřejné ukázce nezobrazují.</p>
 
 				<div class="note-body note-body--narrative" data-note-body="dekurz">
-					<p>Klientka, 34 let, v individuální psychoterapii popsala anticipační úzkost před pracovní poradou s napětím, zrychleným dýcháním, obavou ze zablokování a tendencí účast zrušit. Použila zpomalené dýchání a uzemnění, na poradě zůstala a položila připravenou otázku; intenzita úzkosti poklesla ze 7/10 na 4/10. CORE-10 se změnil z 1,6 na 0,9 a WHO-5 z 2,2 na 2,8, tedy příznivým směrem; statistická spolehlivost změny nebyla posouzena. Sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek klientka výslovně popřela, známky akutního ohrožení nebyly zachyceny. V sezení byl zmapován vztah mezi očekáváním selhání, tělesnou reakcí a vyhýbáním, ověřeny důkazy pro obávaný výsledek a nacvičen začátek krátké prezentace. Klientka označila plán za proveditelný. Do příštího sezení použije před poradou pět minut zpomalené dýchání a uzemnění, představí jeden připravený bod a zapíše očekávání, míru úzkosti a skutečný výsledek. Záznam bude společně vyhodnocen příště. Další služba ani krizový plán nebyly domluveny.</p>
-				</div>
-			</article>
-
-			<article class="format-panel" id="panel-girp" role="tabpanel" aria-labelledby="tab-girp" tabindex="0" data-panel="girp" hidden>
-				<header class="format-heading">
-					<div>
-						<p class="format-heading__type">Zápis zaměřený na cíl a odezvu</p>
-						<h2>GIRP</h2>
-						<p>Zkratka GIRP označuje Goal (cíl), Intervention (intervence), Response (reakce) a Plan (plán); formát sleduje cíl, práci v sezení, reakci klientky a další postup.</p>
-					</div>
-				</header>
-
-				<div class="note-body" data-note-body="girp">
-					<section class="note-section">
-						<h3>Cíl</h3>
-						<p>Dlouhodobým cílem je zvýšit schopnost klientky mluvit při pracovních setkáních i za přítomnosti úzkosti a postupně omezovat vyhýbání skupinovým situacím. Aktuálním krokem je zvládnout krátkou prezentaci na týmové poradě v příštím týdnu. Za splnění kroku bude považováno, když klientka na poradě představí jeden předem připravený bod; cílem není úplné vymizení úzkosti.</p>
-					</section>
-					<section class="note-section">
-						<h3>Intervence</h3>
-						<p>Terapeut s klientkou zmapoval posloupnost spouštěče, očekávání „zablokuji se“, tělesného napětí, zrychleného dýchání a nutkání účast zrušit. Společně porovnali obávaný a skutečný průběh poslední porady a pojmenovali kroky, které klientce pomohly v situaci zůstat. Následoval nácvik úvodní věty prezentace a příprava dalšího stupňovaného kroku. Pro příští poradu společně vymezili pozorovatelný krok: představit jeden připravený bod a následně porovnat původní očekávání se skutečným výsledkem. Zpomalené dýchání a uzemnění byly vybrány jako krátká příprava před poradou. Do přípravy byla zahrnuta také nabídka kolegyně, že s klientkou prezentaci předem projde.</p>
-					</section>
-					<section class="note-section">
-						<h3>Reakce</h3>
-						<p>Klientka popsala, že před poslední poradou použila zpomalené dýchání a uzemnění, na poradě zůstala a položila jednu připravenou otázku. Úzkost se v průběhu situace snížila ze 7/10 na 4/10 a obávané zablokování nenastalo. Při společném rozboru rozpoznala rozdíl mezi původním očekáváním a skutečným výsledkem. Nácvik úvodní věty označila za užitečný a navržený krok za proveditelný.</p>
-						<p>CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8; oba výsledky se posunuly příznivým směrem, bez posouzení statistické spolehlivosti změny. SRS-3-B zachytil nápomocné reakce 3,9/5 a brzdící reakce 1,5/5. Výsledek tedy neukázal výrazný signál obtíží v terapeutické spolupráci. Klientka výslovně popřela sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek. Známky akutního ohrožení nebyly zachyceny.</p>
-					</section>
-					<section class="note-section">
-						<h3>Plán</h3>
-						<p>Před příští poradou klientka pět minut použije zpomalené dýchání a uzemnění. Na poradě představí jeden předem připravený bod. Před situací zapíše očekávaný průběh a míru úzkosti, po poradě skutečný výsledek; záznam společně projdou na příštím sezení. Doporučení k další službě ani krizový plán nebyly domluveny.</p>
-					</section>
+					<p>Klientka, 34 let, v individuální psychoterapii popsala anticipační úzkost před pracovní poradou s napětím, zrychleným dýcháním, obavou ze zablokování a tendencí účast zrušit. Použila zpomalené dýchání a uzemnění, na poradě zůstala a položila připravenou otázku; intenzita úzkosti poklesla ze 7/10 na 4/10. CORE-10 se změnil z 1,6 na 0,9 a WHO-5 z 2,2 na 2,8, tedy příznivým směrem. Sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek klientka výslovně popřela, známky akutního ohrožení nebyly zachyceny. V sezení byl zmapován vztah mezi očekáváním selhání, tělesnou reakcí a vyhýbáním, ověřeny důkazy pro obávaný výsledek a nacvičen začátek krátké prezentace. Klientka označila plán za proveditelný. Do příštího sezení použije před poradou pět minut zpomalené dýchání a uzemnění, představí jeden připravený bod a zapíše očekávání, míru úzkosti a skutečný výsledek. Záznam bude společně vyhodnocen příště. Další služba ani krizový plán nebyly domluveny.</p>
 				</div>
 			</article>
 		</section>
@@ -242,6 +285,20 @@
 		</aside>
 
 		<p class="closing-note">Ukázka slouží pouze k porovnání struktury zápisu. Všechny varianty vycházejí ze stejného fiktivního podkladu.</p>
+
+		<details class="format-rationale">
+			<summary>Poznámka k výběru formátů</summary>
+			<div>
+				<p>Zápisy s koncovkou <strong>-IRP</strong> (BIRP, GIRP, PIRP, SIRP) se od sebe liší jen prvním písmenem, tedy tím, o co se zápis kotví; Intervence, Reakce a Plán jsou u všech čtyř totožné. Rodina vznikla v americké komunitní péči a v prostředí Medicaid managed care, kde bylo nutné doložit, že proběhla účtovatelná intervence a jakou měla odezvu. Není to členění odvozené z psychoterapeutické teorie a údaje o jeho rozšířenosti v recenzované podobě neexistují. SOAP a DAP jsou z celé rodiny jediné dva formáty, které může znát i český terapeut.</p>
+				<p>Z té rodiny je v ukázce <strong>SIRP</strong> a chybí GIRP a BIRP. Důvod je praktický: jako jediný stojí na tom, co má DeePsy z přepisu skutečně k dispozici.</p>
+				<ul>
+					<li><strong>GIRP</strong> začíná cílem z léčebného plánu, nikoli cílem sezení. DeePsy léčebný plán nevede, takže by tuto kolonku musel vyplnit domněnkou, nebo ji nechat prázdnou. Nejbližší náhradou by byly otevřené body z přehledu epizody a z plánu předchozího zápisu.</li>
+					<li><strong>BIRP</strong> začíná pozorovaným chováním včetně neverbálního projevu. Z textového přepisu je dostupné pouze chování referované klientkou a chování verbální; odvozovat z textu mimiku, oční kontakt nebo tón hlasu je v promptech výslovně zakázáno.</li>
+					<li><strong>SIRP</strong> začíná situací tak, jak ji podává sám klient. To je přesně to, co přepis obsahuje.</li>
+				</ul>
+				<p>Ukázka se tak liší ve třech věcech, ke kterým má smysl sbírat zpětnou vazbu: rozsahem (plný zápis oproti dekurzu), formou (souvislý text oproti odrážkám u DAP) a tím, čím je zápis kotvený (data oproti situaci).</p>
+			</div>
+		</details>
 	</main>
 
 	<footer class="site-footer">

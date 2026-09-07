@@ -4,6 +4,52 @@
 	const tabs = Array.from(document.querySelectorAll("[role='tab'][data-format]"));
 	const panels = Array.from(document.querySelectorAll("[role='tabpanel'][data-panel]"));
 	const formats = new Set(tabs.map((tab) => tab.dataset.format));
+	const switches = new Map();
+
+	document.querySelectorAll("[data-variant-switch]").forEach((group) => {
+		const format = group.dataset.variantSwitch;
+		const buttons = Array.from(group.querySelectorAll("button[data-variant]"));
+		if (!buttons.length) {
+			return;
+		}
+		switches.set(format, {
+			buttons: buttons,
+			bodies: Array.from(document.querySelectorAll("[data-panel='" + format + "'] [data-body-variant]")),
+			fallback: buttons[0].dataset.variant,
+			current: buttons[0].dataset.variant,
+		});
+	});
+
+	function variantsOf(format) {
+		const group = switches.get(format);
+		return group ? group.buttons.map((button) => button.dataset.variant) : [];
+	}
+
+	function setVariant(format, variant) {
+		const group = switches.get(format);
+		if (!group) {
+			return;
+		}
+		if (!variantsOf(format).includes(variant)) {
+			variant = group.fallback;
+		}
+
+		group.current = variant;
+		group.buttons.forEach((button) => {
+			button.setAttribute("aria-pressed", String(button.dataset.variant === variant));
+		});
+		group.bodies.forEach((body) => {
+			body.hidden = body.dataset.bodyVariant !== variant;
+		});
+	}
+
+	function hashFor(format) {
+		const group = switches.get(format);
+		if (!group || group.current === group.fallback) {
+			return format;
+		}
+		return format + "-" + group.current;
+	}
 
 	function activate(format, updateHash) {
 		if (!formats.has(format)) {
@@ -22,8 +68,28 @@
 		});
 
 		if (updateHash) {
-			history.replaceState(null, "", "#" + format);
+			history.replaceState(null, "", "#" + hashFor(format));
 		}
+	}
+
+	function open(raw) {
+		if (formats.has(raw)) {
+			activate(raw, true);
+			return;
+		}
+
+		const separator = raw.lastIndexOf("-");
+		if (separator > 0) {
+			const format = raw.slice(0, separator);
+			const variant = raw.slice(separator + 1);
+			if (formats.has(format) && variantsOf(format).includes(variant)) {
+				setVariant(format, variant);
+				activate(format, true);
+				return;
+			}
+		}
+
+		activate("deepsy", true);
 	}
 
 	tabs.forEach((tab, index) => {
@@ -45,9 +111,19 @@
 		});
 	});
 
-	window.addEventListener("hashchange", () => {
-		activate(window.location.hash.slice(1), true);
+	switches.forEach((group, format) => {
+		group.buttons.forEach((button) => {
+			button.addEventListener("click", () => {
+				setVariant(format, button.dataset.variant);
+				activate(format, true);
+			});
+		});
+		setVariant(format, group.fallback);
 	});
 
-	activate(window.location.hash.slice(1) || "deepsy", true);
+	window.addEventListener("hashchange", () => {
+		open(window.location.hash.slice(1));
+	});
+
+	open(window.location.hash.slice(1) || "deepsy");
 })();
