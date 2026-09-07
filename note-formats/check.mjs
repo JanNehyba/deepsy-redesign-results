@@ -128,7 +128,7 @@ assert.ok(dekurzWords <= 200, `Dekurz má ${dekurzWords} slov; maximum je 200`);
 
 const budgets = {
 	dap: [300, 350],
-	"dap-bullets": [280, 350],
+	"dap-bullets": [265, 350],
 	sirp: [300, 360],
 };
 
