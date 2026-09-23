@@ -15,6 +15,16 @@ Sekce „Klinické hypotézy" v plném zápisu DeePsy je doslovný výstup model
 byl fiktivní přepis složený k tomuto případu; přepis sám se nezveřejňuje.
 Ostatní sekce zůstávají ručně psané.
 
+Blok „Doporučení založená na důkazech“ pod zápisy DeePsy, DAP a SIRP je doslovný
+výstup DeePsy (`php spark generate:evidence --transcript-file … --modality
+"Psychodynamická psychoterapie"`, 24. 9. 2026, modely glm-5.2, deepseek-v4-flash
+a kimi) nad stejným fiktivním přepisem. Text je jen převedený do HTML, nic se
+nepřepisovalo. Všechny citované články jsou skutečné a ověřené proti Crossref nebo
+PubMed. Pipeline našla v sezení tři problémy; třetí („Popírání pozitivních
+zkušeností“) při tomto běhu v jedné z fází selhal a ukázka ho neuvádí. Modalita je
+záměrně jiná než kognitivně-behaviorální, aby bylo vidět, jak doporučení pracují
+s evidencí z jiného přístupu.
+
 Dotazníkové hodnoty byly vytvořeny z nových odpovědí a spočítány existujícím
 skórovacím algoritmem DeePsy:
 
@@ -31,7 +41,9 @@ python -m http.server 8000
 ```
 
 Stránka bude na `http://localhost:8000/note-formats/`. Neobsahuje backend,
-analytiku, cookies ani síťové požadavky na služby třetích stran.
+analytiku, cookies ani síťové požadavky na služby třetích stran. Jediné vnější
+adresy jsou odkazy na citované články (doi.org, PubMed); otevře je až čtenář
+kliknutím a odcházejí bez refereru.
 
 ## Kontrola před publikací
 

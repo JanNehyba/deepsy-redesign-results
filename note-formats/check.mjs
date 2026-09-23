@@ -71,11 +71,21 @@ const forbidden = [
 	],
 ];
 
+// Seznam zdrojů doporučení se kontroluje zvlášť níže: DOI obsahují dlouhé řady
+// číslic, které by vzor telefonního čísla chybně zachytil.
+const withoutSourceList = html.replace(/<ol class="evidence__sources">[\s\S]*?<\/ol>/, " ");
 for (const [pattern, label] of forbidden) {
-	assert.doesNotMatch(stripMarkup(html), pattern, `Nalezeno: ${label}`);
+	assert.doesNotMatch(stripMarkup(withoutSourceList), pattern, `Nalezeno: ${label}`);
 }
 
-assert.doesNotMatch(publicSources, /https?:\/\//i, "Veřejná stránka nesmí načítat vzdálené zdroje");
+// Stránka nic nenačítá z cizích serverů. Jediné povolené adresy jsou odkazy na
+// citované články (doi.org, PubMed), na které čtenář klikne sám.
+const citationLink = /<a href="https:\/\/(?:doi\.org\/10\.\d{4,9}\/[^"\s]+|pubmed\.ncbi\.nlm\.nih\.gov\/\d+\/)" rel="noopener noreferrer" referrerpolicy="no-referrer">/g;
+assert.doesNotMatch(
+	publicSources.replace(citationLink, ""),
+	/https?:\/\//i,
+	"Veřejná stránka nesmí načítat vzdálené zdroje; povolené jsou jen odkazy na citované články",
+);
 
 for (const asset of html.matchAll(/(?:src|href)="(assets\/[^"#?]+)"/g)) {
 	await access(join(directory, asset[1]));
@@ -148,6 +158,7 @@ const budgets = {
 	dap: [300, 350],
 	"dap-bullets": [265, 350],
 	sirp: [300, 360],
+	"sirp-bullets": [270, 360],
 };
 
 const formatWords = {};
@@ -157,30 +168,67 @@ for (const [format, [min, max]] of Object.entries(budgets)) {
 	assert.ok(words >= min && words <= max, `${format} má ${words} slov; očekáváno je ${min}–${max}`);
 }
 
-// DAP se nabízí ve dvou podobách nad stejnými fakty — proto se rozsahy nesmí rozejít.
-assert.ok(
-	Math.abs(formatWords.dap - formatWords["dap-bullets"]) <= 40,
-	`Obě podoby DAP se rozsahem rozcházejí o ${Math.abs(formatWords.dap - formatWords["dap-bullets"])} slov`,
-);
-assert.match(html, /data-variant-switch="dap"/, "Záložka DAP má obsahovat přepínač podoby zápisu");
-assert.equal(
-	(html.match(/<div class="note-body" data-note-body="dap-bullets"[^>]*>[\s\S]*?<ul>/g) || []).length,
-	1,
-	"Odrážková podoba DAP má být zapsaná seznamem",
-);
-assert.doesNotMatch(noteBody("dap"), /<ul>/, "Souvislá podoba DAP nemá obsahovat odrážky");
-assert.doesNotMatch(noteBody("dap-bullets"), /<p>/, "Odrážková podoba DAP nemá obsahovat odstavce");
+// DAP i SIRP se nabízejí ve dvou podobách nad stejnými fakty — proto se rozsahy nesmí rozejít.
+const variantFormats = { dap: ["Data", "Hodnocení", "Plán"], sirp: ["Situace", "Intervence", "Reakce", "Plán"] };
+for (const [format, headings] of Object.entries(variantFormats)) {
+	const label = format.toUpperCase();
+	const bullets = `${format}-bullets`;
+	assert.ok(
+		Math.abs(formatWords[format] - formatWords[bullets]) <= 40,
+		`Obě podoby ${label} se rozsahem rozcházejí o ${Math.abs(formatWords[format] - formatWords[bullets])} slov`,
+	);
+	assert.match(html, new RegExp(`data-variant-switch="${format}"`), `Záložka ${label} má obsahovat přepínač podoby zápisu`);
+	assert.equal(
+		(html.match(new RegExp(`<div class="note-body" data-note-body="${bullets}"[^>]*>[\\s\\S]*?<ul>`, "g")) || []).length,
+		1,
+		`Odrážková podoba ${label} má být zapsaná seznamem`,
+	);
+	assert.doesNotMatch(noteBody(format), /<ul>/, `Souvislá podoba ${label} nemá obsahovat odrážky`);
+	assert.doesNotMatch(noteBody(bullets), /<p>/, `Odrážková podoba ${label} nemá obsahovat odstavce`);
 
-// Souvislá podoba má v každé sekci nejvýše dva odstavce. Kdyby se odrážková podoba
-// rozdrobila, neporovnávala by se forma, ale míra drobení.
-const bulletSections = Array.from(
-	noteBody("dap-bullets").matchAll(/<h3>([^<]+)<\/h3>([\s\S]*?)<\/section>/g),
-	(match) => [match[1], (match[2].match(/<li>/g) || []).length],
-);
-assert.equal(bulletSections.length, 3, "Odrážková podoba DAP má mít sekce Data, Hodnocení a Plán");
-for (const [heading, count] of bulletSections) {
-	assert.ok(count <= 6, `Sekce ${heading} v odrážkové podobě DAP má ${count} odrážek; maximum je 6`);
+	// Kdyby se odrážková podoba rozdrobila, neporovnávala by se forma, ale míra drobení.
+	const bulletSections = Array.from(
+		noteBody(bullets).matchAll(/<h3>([^<]+)<\/h3>([\s\S]*?)<\/section>/g),
+		(match) => [match[1], (match[2].match(/<li>/g) || []).length],
+	);
+	assert.deepEqual(bulletSections.map(([heading]) => heading), headings, `Odrážková podoba ${label} má mít sekce ${headings.join(", ")}`);
+	for (const [heading, count] of bulletSections) {
+		assert.ok(count <= 6, `Sekce ${heading} v odrážkové podobě ${label} má ${count} odrážek; maximum je 6`);
+	}
 }
+
+// Doporučení založená na důkazech: jeden blok pod zápisem pro DeePsy, DAP a SIRP.
+const evidenceMatch = html.match(/<section class="evidence" id="evidence" data-evidence-for="([^"]+)"[^>]*>([\s\S]*?)\n\t\t\t<\/section>/);
+assert.ok(evidenceMatch, "Blok doporučení nebyl nalezen");
+assert.deepEqual(evidenceMatch[1].split(" "), ["deepsy", "dap", "sirp"], "Doporučení patří k DeePsy, DAP a SIRP, ne k dekurzu");
+const evidenceHtml = evidenceMatch[2];
+assert.match(evidenceHtml, /<h3 id="evidence-title">Doporučení založená na důkazech<\/h3>/);
+assert.match(evidenceHtml, /Modalita terapeuta v ukázce:/, "Blok má říct, pro jakou modalitu doporučení vznikla");
+assert.ok(html.indexOf('class="evidence"') > html.indexOf('id="panel-sirp"'), "Blok doporučení patří pod zápisy");
+assert.ok(html.indexOf('class="evidence"') < html.indexOf('class="source-notice'), "Blok doporučení patří do karty zápisu");
+
+const sourceItems = Array.from(
+	(evidenceHtml.match(/<ol class="evidence__sources">([\s\S]*?)<\/ol>/) || ["", ""])[1].matchAll(/<li>([\s\S]*?)<\/li>/g),
+	(match) => match[1],
+);
+assert.ok(sourceItems.length >= 2, "Doporučení mají citovat aspoň dva zdroje");
+for (const item of sourceItems) {
+	assert.equal((item.match(citationLink) || []).length, 1, `Zdroj nemá právě jeden odkaz na DOI nebo PubMed: ${stripMarkup(item)}`);
+}
+const citedNumbers = Array.from(evidenceHtml.matchAll(/<span class="evidence__refs">\[([\d, ]+)\]<\/span>/g))
+	.flatMap((match) => match[1].split(",").map((n) => Number(n.trim())));
+assert.ok(citedNumbers.length > 0, "Odrážky doporučení mají odkazovat na zdroje");
+for (const n of citedNumbers) {
+	assert.ok(n >= 1 && n <= sourceItems.length, `Odkaz [${n}] nemá zdroj v seznamu`);
+}
+for (let n = 1; n <= sourceItems.length; n += 1) {
+	assert.ok(citedNumbers.includes(n), `Zdroj ${n} není nikde citován`);
+}
+assert.doesNotMatch(
+	stripMarkup(evidenceHtml),
+	/měl[a]?\s+byste|měl\/a byste|doporučujeme|musíte/i,
+	"Doporučení nemají terapeutovi přikazovat",
+);
 
 // Poznámka pro tým je sbalená a nese důvody výběru formátů.
 const rationale = html.match(/<details class="format-rationale">([\s\S]*?)<\/details>/);

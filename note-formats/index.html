@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="robots" content="noindex, nofollow, noarchive">
-	<meta name="description" content="Výzkumný prototyp porovnávající čtyři formáty terapeutického zápisu na jednom fiktivním případu; DAP je k dispozici v souvislém textu i v odrážkách.">
+	<meta name="description" content="Výzkumný prototyp porovnávající čtyři formáty terapeutického zápisu na jednom fiktivním případu; DAP a SIRP jsou k dispozici v souvislém textu i v odrážkách, s doporučeními založenými na důkazech.">
 	<meta name="theme-color" content="#004e5c">
 	<title>Ukázka formátů terapeutického zápisu — DeePsy</title>
 	<link rel="icon" type="image/png" href="assets/favicon-32x32.png">
@@ -25,7 +25,7 @@
 		<section class="intro" aria-labelledby="page-title">
 			<p class="eyebrow">Porovnání formátů terapeutického zápisu</p>
 			<h1 id="page-title">5. sezení — Jana N. <span>(demo)</span></h1>
-			<p class="intro__lead">Čtyři formáty zápisu stejného fiktivního sezení. Přepínejte mezi nimi a porovnejte jejich přehlednost, rozsah a praktickou použitelnost. U formátu DAP lze navíc přepnout mezi souvislým textem a odrážkami.</p>
+			<p class="intro__lead">Čtyři formáty zápisu stejného fiktivního sezení. Přepínejte mezi nimi a porovnejte jejich přehlednost, rozsah a praktickou použitelnost. U formátů DAP a SIRP lze navíc přepnout mezi souvislým textem a odrážkami.</p>
 		</section>
 
 		<div class="format-tabs" role="tablist" aria-label="Formáty terapeutického zápisu">
@@ -243,11 +243,17 @@
 					<div>
 						<p class="format-heading__type">Zápis zaměřený na situaci a odezvu</p>
 						<h2>SIRP</h2>
-						<p>Zkratka SIRP označuje Situation (situace), Intervention (intervence), Response (reakce) a Plan (plán); na začátku stojí situace tak, jak ji podává klient, a zápis pak sleduje práci v sezení, odezvu klientky a další postup.</p>
+						<p>Zkratka SIRP označuje Situation (situace), Intervention (intervence), Response (reakce) a Plan (plán); na začátku stojí situace tak, jak ji podává klient, a zápis pak sleduje práci v sezení, odezvu klientky a další postup. Obě podoby níže obsahují stejná fakta a liší se pouze formou.</p>
 					</div>
 				</header>
 
-				<div class="note-body" data-note-body="sirp">
+				<div class="variant-switch" data-variant-switch="sirp" role="group" aria-label="Podoba zápisu SIRP">
+					<span class="variant-switch__label">Podoba zápisu</span>
+					<button type="button" data-variant="prose" aria-pressed="true">Souvislý text</button>
+					<button type="button" data-variant="bullets" aria-pressed="false">Odrážky</button>
+				</div>
+
+				<div class="note-body" data-note-body="sirp" data-body-variant="prose">
 					<section class="note-section">
 						<h3>Situace</h3>
 						<p>Klientka, 34 let, přišla na páté individuální sezení s tématem, které sama označila za nejtíživější: mluvení na pracovních poradách. Popsala, že před poslední poradou cítila napětí, zrychlilo se jí dýchání a vracela se myšlenka „zablokuji se“; zvažovala, že účast zruší. Na poradu nakonec přišla, před vstupem pět minut zpomaleně dýchala a použila uzemnění. Během jednání zůstala v místnosti a položila jednu předem připravenou otázku. Intenzitu úzkosti hodnotila před situací jako 7/10 a po jejím zvládnutí jako 4/10; obávané zablokování nenastalo. Sama dodala, že ji překvapilo, jak se očekávání rozešlo se skutečným průběhem. V příštím týdnu ji čeká krátká prezentace na týmové poradě a kolegyně jí nabídla, že s ní její začátek předem projde.</p>
@@ -264,6 +270,48 @@
 					<section class="note-section">
 						<h3>Plán</h3>
 						<p>Před příští poradou klientka pět minut použije zpomalené dýchání a uzemnění. Na poradě představí jeden předem připravený bod. Před situací zapíše očekávaný průběh a míru úzkosti, po poradě skutečný výsledek; záznam společně projdou na příštím sezení. Doporučení k další službě ani krizový plán nebyly domluveny.</p>
+					</section>
+				</div>
+
+				<div class="note-body" data-note-body="sirp-bullets" data-body-variant="bullets" hidden>
+					<section class="note-section">
+						<h3>Situace</h3>
+						<ul>
+							<li>Klientka, 34 let, páté individuální sezení; jako nejtíživější téma sama označila mluvení na pracovních poradách.</li>
+							<li>Před poslední poradou cítila napětí a zrychlené dýchání, vracela se jí myšlenka „zablokuji se“ a zvažovala, že účast zruší.</li>
+							<li>Na poradu přesto přišla: před vstupem pět minut zpomaleně dýchala a použila uzemnění, během jednání zůstala v místnosti a položila jednu předem připravenou otázku.</li>
+							<li>Úzkost hodnotila před situací jako 7/10 a po jejím zvládnutí jako 4/10; obávané zablokování nenastalo a sama dodala, že ji překvapilo, jak se očekávání rozešlo se skutečným průběhem.</li>
+							<li>V příštím týdnu ji čeká krátká prezentace na týmové poradě; kolegyně nabídla, že s ní její začátek předem projde.</li>
+						</ul>
+					</section>
+					<section class="note-section">
+						<h3>Intervence</h3>
+						<ul>
+							<li>Terapeut s klientkou zmapoval posloupnost spouštěče, očekávání „zablokuji se“, tělesného napětí, zrychleného dýchání a nutkání účast zrušit.</li>
+							<li>Společně porovnali obávaný a skutečný průběh poslední porady a pojmenovali kroky, které klientce pomohly v situaci zůstat.</li>
+							<li>Následoval nácvik úvodní věty připravované prezentace.</li>
+							<li>Zpomalené dýchání a uzemnění byly potvrzeny jako krátká příprava před poradou; do přípravy byla zahrnuta i nabídka kolegyně.</li>
+						</ul>
+					</section>
+					<section class="note-section">
+						<h3>Reakce</h3>
+						<ul>
+							<li>Klientka rozpoznala rozdíl mezi původním očekáváním a skutečným výsledkem a formulovala úvodní větu nahlas.</li>
+							<li>Nácvik označila za užitečný a navržený krok za proveditelný.</li>
+							<li>CORE-10 klesl z 1,6 na 0,9 a WHO-5 vzrostl z 2,2 na 2,8; oba výsledky se posunuly příznivým směrem.</li>
+							<li>SRS-3-B zachytil nápomocné reakce 3,9/5 a brzdící reakce 1,5/5, tedy bez výrazného signálu obtíží ve spolupráci.</li>
+							<li>Klientka výslovně popřela sebevražedné myšlenky, sebepoškozování i rizikové užívání návykových látek; známky akutního ohrožení nebyly zachyceny.</li>
+						</ul>
+					</section>
+					<section class="note-section">
+						<h3>Plán</h3>
+						<ul>
+							<li>Před příští poradou pět minut zpomalené dýchání a uzemnění.</li>
+							<li>Na poradě představit jeden předem připravený bod.</li>
+							<li>Před situací zapsat očekávaný průběh a míru úzkosti, po poradě skutečný výsledek.</li>
+							<li>Záznam společně projít na příštím sezení.</li>
+							<li>Doporučení k další službě ani krizový plán nebyly domluveny.</li>
+						</ul>
 					</section>
 				</div>
 			</article>
@@ -292,6 +340,55 @@
 					<p>Klientka, 34 let, v individuální psychoterapii popsala anticipační úzkost před pracovní poradou s napětím, zrychleným dýcháním, obavou ze zablokování a tendencí účast zrušit. Použila zpomalené dýchání a uzemnění, na poradě zůstala a položila připravenou otázku; intenzita úzkosti poklesla ze 7/10 na 4/10. CORE-10 se změnil z 1,6 na 0,9 a WHO-5 z 2,2 na 2,8, tedy příznivým směrem. Sebevražedné myšlenky, sebepoškozování a rizikové užívání návykových látek klientka výslovně popřela, známky akutního ohrožení nebyly zachyceny. V sezení byl zmapován vztah mezi očekáváním selhání, tělesnou reakcí a vyhýbáním, ověřeny důkazy pro obávaný výsledek a nacvičen začátek krátké prezentace. Klientka označila plán za proveditelný. Do příštího sezení použije před poradou pět minut zpomalené dýchání a uzemnění, představí jeden připravený bod a zapíše očekávání, míru úzkosti a skutečný výsledek. Záznam bude společně vyhodnocen příště. Další služba ani krizový plán nebyly domluveny.</p>
 				</div>
 			</article>
+
+			<section class="evidence" id="evidence" data-evidence-for="deepsy dap sirp" aria-labelledby="evidence-title">
+				<p class="evidence__kicker">Připojeno k zápisu DeePsy, DAP i SIRP</p>
+				<h3 id="evidence-title">Doporučení založená na důkazech</h3>
+				<p class="evidence__lead">Podklad pro klinický úsudek z publikovaného výzkumu, ne předpis postupu. Z přepisu sezení se vyberou problémy, se kterými se pracovalo, k nim se dohledají aktuální články (PubMed, OpenAlex), každý zdroj se ověří proti databázi Crossref nebo PubMed a z abstraktů vznikne stručné shrnutí s citacemi. Vyhledávání vychází z problému a psychologického procesu, ne z diagnózy, a zohledňuje modalitu terapeuta; doporučení proto nejsou automaticky kognitivně-behaviorální.</p>
+				<p class="evidence__meta">Modalita terapeuta v ukázce: <strong>psychodynamická psychoterapie</strong> · skutečný výstup DeePsy nad fiktivním přepisem (glm-5.2, deepseek-v4-flash a kimi, 24. 9. 2026)</p>
+				<div class="evidence__problem">
+					<h4>Strach z promluvení na poradách <span class="evidence__level evidence__level--moderate">Středně silné doklady</span></h4>
+					<p>Výzkum sociální úzkosti ukazuje, že anticipační zpracování a vyhodnocování vlastního výkonu po události hrají ústřední roli v udržování strachu z vystoupení. Studie naznačují, že změna hodnocení situace i přijetí prožitku snižují negativní emoci, a to napříč přístupy, a že opakované vystavení řečnickým situacím vede k habituaci až po několika po sobě jdoucích pokusech. Doklady specificky pro psychodynamickou práci s tímto problémem jsou omezené.</p>
+					<ul>
+						<li>Zaměřit se v práci na anticipační zpracování a povinnostné vyhodnocování po sociálních situacích; výzkum ukazuje, že právě tyto procesy se vážou k vrcholné úzkosti při improvizovaném vystoupení. V psychodynamické práci lze tyto procesy chápat jako projev negativního sebehodnocení, které strach udržuje. <span class="evidence__refs">[1]</span></li>
+						<li>Podpořit v klientovi schopnost přehodnotit hrozící situaci i přijmout prožívanou úzkost, aniž by ji musel potlačit. Studie ukazují, že kognitivní přehodnocení i přijetí snižují negativní emoci u sociální úzkosti s dlouhodobým prospěchem. <span class="evidence__refs">[2]</span></li>
+						<li>Počítat s tím, že návrat do řečnických situací vyžaduje opakování – habituace úzkosti se u opakovaných vystoupení dostavila až po několika po sobě jdoucích pokusech a první pokusy mohou úzkost naopak zvýšit. Tento princip přenositelný napříč přístupy pomáhá nastavit realistická očekávání klienta. <span class="evidence__refs">[3]</span></li>
+						<li>Při práci se sebekritikou v sobě lze vycházet z konceptu soucitu se sebou a s druhými; teoretická literatura ho navrhuje jako ústřední složku terapie duševního utrpení. Pilotní data také naznačují, že aktivity budující pozitivní prožívání snižují klinicky významnou úzkost. <span class="evidence__refs">[4, 5]</span></li>
+						<li><strong>S opatrností:</strong> Vyhnout se předpokladu, že jednorázové vystavení situaci strach vyřeší; experimentální data ukazují, že úzkost při prvních pokusech může stoupnout a habituace přichází až s více po sobě jdoucími vystoupeními. Příliš brzké hodnocení pokroku může práci podkopat. <span class="evidence__refs">[3]</span></li>
+						<li><strong>S opatrností:</strong> Neredukovat práci pouze na řešení tělesných příznaků úzkosti; teoretický rámec naznačuje, že strach z vystoupení je provázán s negativními implicitními přesvědčeními, která tělesné příznaky samo o sobě nemění. <span class="evidence__refs">[6]</span></li>
+					</ul>
+					<p class="evidence__note"><strong>Pro váš přístup:</strong> K psychodynamické terapii se přímo nevztahuje žádný z pěti použitých zdrojů; přenositelné jsou hlavně principy role anticipačního zpracování, sebehodnocení a opakované zkušenosti s prožitím úzkosti, nikoli techniky konkrétních škol.</p>
+					<p class="evidence__limits"><strong>Limity výzkumu:</strong> K psychodynamické terapii se nevztahuje žádný z přiložených empirických zdrojů – pocházejí především z kognitivně-behaviorálních a acceptance-založených studií a z teoretických prací. Studie expozice zahrnovala malý neklinický vzorek a pilotní studie intervencí pozitivního prožívání a tréninku pracovní paměti měly nízký počet účastníků, takže doklady jsou předběžné.</p>
+					<p class="evidence__limits">Doporučení vychází ze čtyř konvergujících experimentálních aRCT studií (včetně randomizované klinické studie CBT vs. MBSR u sociální úzkosti), které konzistentně podporují roli kognitivního přehodnocení, přijetí a opakované expozice. Kromě RCT jsou zahrnuty dvě teoretické práce bez empirických dat a pilotní studie s malými vzorky. Hlavní limity spočívají v absenci přímých důkazů pro psychodynamický přístup, malých vzorcích doplňkových intervencí (n=19, 29, 40) a neklinickém charakteru vzorku v expoziční studii.</p>
+				</div>
+				<div class="evidence__problem">
+					<h4>Únikové a vyhýbací chování <span class="evidence__level evidence__level--moderate">Středně silné doklady</span></h4>
+					<p>Dostupné doklady soustředí zážitkové vyhýbání jako udržující proces úzkosti: krátkodobá úleva po úniku fixuje vzorec, zatímco práce s přijímáním a regulací emocí je spojena s poklesem distresu. Nejpevnější data pocházejí z akceptačně-závazkové a kognitivně-behaviorální tradice, principy jsou však přenositelné do psychodynamického zkoumání funkce úniku. Přímé studie pro psychodynamickou terapiu tohoto konkrétního problému chybí.</p>
+					<ul>
+						<li>V metaanalýze studií akceptačně-závazkové terapie (ACT) se menší zážitkové vyhýbání a větší psychologická flexibilita spojovaly s poklesem psychického distresu; napříč přístupy tak dává smysl chápat únik z porad a mlčení jako proces, který úzkost udržuje, nikoli jako rys charakteru. <span class="evidence__refs">[7, 8]</span></li>
+						<li>V metaanalýze výzkumu terapeutických metod (humanisticko-experienciální tradice i strukturovaný výcvik) byly afektivně zaměřené metody spojené s výrazným zlepšením regulace emocí; přenositelný princip: pomáhat klientovi zůstat s úzkostí a pojmenovat ji, místo aby před ní utíkal. <span class="evidence__refs">[9]</span></li>
+						<li>V kvasiexperimentální studii kognitivně-behaviorální terapie u zaměstnanců firem se snížilo sociální vyhýbání, distres i úzkost; princip, který se přenáší mimo KBT: postupné zapojování se do obávaných pracovních situací místo jejich obcházení, bez přebírání kognitivně-behaviorálního protokolu. <span class="evidence__refs">[10]</span></li>
+						<li><strong>S opatrností:</strong> Doklady nepodporují pasivní přístup „počkat, až to přejde“: metaanalýze studií ACT ukazuje, že nezpracované zážitkové vyhýbání a psychologická neflexibilita se spíše udržují, takže krátkodobá úleva po každé omluvě z porady může vzorec dále fixovat. <span class="evidence__refs">[7]</span></li>
+						<li><strong>S opatrností:</strong> Pozorovací data o poklesu zážitkového vyhýbání (bez kontrolní skupiny, sebereport) ukazují jen korelaci s ústupem deprese a nejsou podkladem pro cílené intervence; neopírat o ně konkrétní kroky práce. <span class="evidence__refs">[8]</span></li>
+					</ul>
+					<p class="evidence__note"><strong>Pro váš přístup:</strong> Psychodynamické terapie se přímo netýká žádný ze zdrojů — většina pochází z ACT, KBT a humanisticko-experienciálního výzkumu; přenositelný je hlavně princip, že zážitkové vyhýbání úzkost udržuje a že živé pojmenovávání a snášení emocí pomáhá, což lze integrovat do psychodynamického zkoumání funkce úniku.</p>
+					<p class="evidence__limits"><strong>Limity výzkumu:</strong> Nejsilnější doklady pocházejí z ACT a KBT u obecné dospělé populace; pro psychodynamickou terapii pracovního vyhýbání u dospělých 30–39 let přímé studie chybí. Pracovištní studie nebyla randomizovaná, preliminární studie destruktivního vyhýbání se týkala věku 15–25 let a korelační data nelze číst příčinně.</p>
+					<p class="evidence__limits">Důkazní základ tvoří čtyři studie, z toho dvě metaanalýzy a jedna kvasiexperimentální pracovištní studie KBT, které se shodně shodují v tom, že cílení na zážitkové vyhýbání a regulaci emocí snižuje distres a sociální vyhýbání. Nejvyšší hierarchickou úroveň představují metaanalýzy ACT a regulace emocí; hlavní mezerou je chybějící přímá evidence pro psychodynamickou terapii a omezená demografická shoda (kvasiexperimentální studie nebyla randomizovaná a observační data z psychedelického kontextu jsou pouze korelační). Přes tyto limity konvergence tří nezávislých zdrojů podporuje prahovou hodnotu pro střední úroveň jistoty.</p>
+				</div>
+				<h4 class="evidence__sources-title">Zdroje</h4>
+				<ol class="evidence__sources">
+					<li>du Toit, Simone A, Kade, Saif A, Danielson, Craig T et al. (2020). The effect of emotional working memory training on emotional and cognitive outcomes in individuals with elevated social anxiety. <em>Journal of affective disorders</em>. <a href="https://doi.org/10.1016/j.jad.2019.09.085" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.1016/j.jad.2019.09.085</a></li>
+					<li>Goldin, Philippe R, Thurston, Matthew, Allende, Santiago et al. (2021). Evaluation of Cognitive Behavioral Therapy vs Mindfulness Meditation in Brain Changes During Reappraisal and Acceptance Among Patients With Social Anxiety Disorder: A Randomized Clinical Trial. <em>JAMA psychiatry</em>. <a href="https://doi.org/10.1001/jamapsychiatry.2021.1862" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.1001/jamapsychiatry.2021.1862</a></li>
+					<li>Marcel Takac, James Collett, Kristopher J. Blom et al. (2019). Public speaking anxiety decreases within repeated virtual reality training sessions. <em>PLoS ONE</em>. <a href="https://doi.org/10.1371/journal.pone.0216288" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.1371/journal.pone.0216288</a></li>
+					<li>Paul Gilbert (2020). Compassion: From Its Evolution to a Psychotherapy. <em>Frontiers in Psychology</em>. <a href="https://doi.org/10.3389/fpsyg.2020.586161" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.3389/fpsyg.2020.586161</a></li>
+					<li>Charles Thomas Taylor, Sonja Lyubomirsky, Murray B. Stein (2017). Upregulating the positive affect system in anxiety and depression: Outcomes of a positive activity intervention. <em>Depression and Anxiety</em>. <a href="https://doi.org/10.1002/da.22593" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.1002/da.22593</a></li>
+					<li>Hyland, Michael E (2020). A reformulated contextual model of psychotherapy for treating anxiety and depression. <em>Clinical psychology review</em>. <a href="https://doi.org/10.1016/j.cpr.2020.101890" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.1016/j.cpr.2020.101890</a></li>
+					<li>Macri, Jenna A, Rogge, Ronald D (2024). Examining domains of psychological flexibility and inflexibility as treatment mechanisms in acceptance and commitment therapy: A comprehensive systematic and meta-analytic review. <em>Clinical psychology review</em>. <a href="https://doi.org/10.1016/j.cpr.2024.102432" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.1016/j.cpr.2024.102432</a></li>
+					<li>Richard J. Zeifman, Anne Catherine Wagner, Ros Watts et al. (2020). Post-Psychedelic Reductions in Experiential Avoidance Are Associated With Decreases in Depression Severity and Suicidal Ideation. <em>Frontiers in Psychiatry</em>. <a href="https://doi.org/10.3389/fpsyt.2020.00782" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.3389/fpsyt.2020.00782</a></li>
+					<li>Iwakabe, Shigeru, Nakamura, Kaori, Thoma, Nathan C (2023). Enhancing emotion regulation. <em>Psychotherapy research : journal of the Society for Psychotherapy Research</em>. <a href="https://doi.org/10.1080/10503307.2023.2183155" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.1080/10503307.2023.2183155</a></li>
+					<li>Shu, Kunyao (2021). The effect of cognitive behavioral therapy on the release of interpersonal stress. <em>Work (Reading, Mass.)</em>. <a href="https://doi.org/10.3233/WOR-213504" rel="noopener noreferrer" referrerpolicy="no-referrer">doi:10.3233/WOR-213504</a></li>
+				</ol>
+			</section>
 		</section>
 
 		<aside class="source-notice source-notice--footer" aria-labelledby="source-title">
@@ -314,7 +411,7 @@
 					<li><strong>BIRP</strong> začíná pozorovaným chováním včetně neverbálního projevu. Z textového přepisu je dostupné pouze chování referované klientkou a chování verbální; odvozovat z textu mimiku, oční kontakt nebo tón hlasu je v promptech výslovně zakázáno.</li>
 					<li><strong>SIRP</strong> začíná situací tak, jak ji podává sám klient. To je přesně to, co přepis obsahuje.</li>
 				</ul>
-				<p>Ukázka se tak liší ve třech věcech, ke kterým má smysl sbírat zpětnou vazbu: rozsahem (plný zápis oproti dekurzu), formou (souvislý text oproti odrážkám u DAP) a tím, čím je zápis kotvený (data oproti situaci).</p>
+				<p>Ukázka se tak liší ve třech věcech, ke kterým má smysl sbírat zpětnou vazbu: rozsahem (plný zápis oproti dekurzu), formou (souvislý text oproti odrážkám u DAP a SIRP) a tím, čím je zápis kotvený (data oproti situaci).</p>
 			</div>
 		</details>
 	</main>
