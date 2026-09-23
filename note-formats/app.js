@@ -5,6 +5,9 @@
 	const panels = Array.from(document.querySelectorAll("[role='tabpanel'][data-panel]"));
 	const formats = new Set(tabs.map((tab) => tab.dataset.format));
 	const switches = new Map();
+	// Recommendations belong to DeePsy, DAP and SIRP; the dekurz stays a bare record.
+	const evidence = document.querySelector("[data-evidence-for]");
+	const evidenceFormats = evidence ? evidence.dataset.evidenceFor.split(" ") : [];
 
 	document.querySelectorAll("[data-variant-switch]").forEach((group) => {
 		const format = group.dataset.variantSwitch;
@@ -66,6 +69,10 @@
 		panels.forEach((panel) => {
 			panel.hidden = panel.dataset.panel !== format;
 		});
+
+		if (evidence) {
+			evidence.hidden = !evidenceFormats.includes(format);
+		}
 
 		if (updateHash) {
 			history.replaceState(null, "", "#" + hashFor(format));

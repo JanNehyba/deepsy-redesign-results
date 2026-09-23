@@ -407,6 +407,150 @@ body {
 	line-height: 1.78;
 }
 
+/* Doporučení založená na důkazech: pod zápisem, oddělená od něj,
+   protože nejsou záznamem sezení, ale podkladem z výzkumu. */
+.evidence {
+	max-width: 790px;
+	margin-top: 44px;
+	padding: 24px 26px 20px;
+	background: var(--deepsy-soft);
+	border: 1px solid var(--deepsy-line);
+	border-left: 4px solid var(--deepsy-cyan);
+}
+
+.evidence[hidden] {
+	display: none;
+}
+
+.evidence__kicker {
+	margin: 0 0 3px;
+	color: var(--deepsy-cyan-dark);
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+}
+
+.evidence h3 {
+	margin: 0 0 8px;
+	color: var(--deepsy-deep);
+	font-size: 17px;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+}
+
+.evidence__lead,
+.evidence__meta {
+	margin: 0 0 6px;
+	color: var(--deepsy-muted);
+	font-size: 13px;
+}
+
+.evidence__meta {
+	margin-bottom: 22px;
+}
+
+.evidence__problem + .evidence__problem {
+	margin-top: 26px;
+	padding-top: 20px;
+	border-top: 1px solid var(--deepsy-line);
+}
+
+.evidence h4 {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 6px 12px;
+	margin: 0 0 8px;
+	color: var(--deepsy-ink);
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.evidence__level {
+	padding: 1px 8px;
+	border: 1px solid currentColor;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	white-space: nowrap;
+}
+
+.evidence__level--strong,
+.evidence__level--moderate {
+	color: var(--deepsy-deep);
+}
+
+.evidence__level--emerging,
+.evidence__level--limited,
+.evidence__level--insufficient {
+	color: var(--deepsy-muted);
+}
+
+.evidence p,
+.evidence ul,
+.evidence ol {
+	margin: 0 0 10px;
+}
+
+.evidence ul {
+	padding-left: 22px;
+}
+
+.evidence li {
+	padding-left: 4px;
+	margin-bottom: 5px;
+}
+
+.evidence li::marker {
+	color: var(--deepsy-cyan-dark);
+}
+
+.evidence__refs {
+	color: var(--deepsy-cyan-dark);
+	font-size: 12px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.evidence__note,
+.evidence__limits {
+	font-size: 13px;
+}
+
+.evidence__limits {
+	color: var(--deepsy-muted);
+}
+
+.evidence__sources-title {
+	margin-top: 26px;
+	padding-top: 16px;
+	border-top: 1px solid var(--deepsy-line);
+}
+
+.evidence__sources {
+	padding-left: 22px;
+	color: var(--deepsy-muted);
+	font-size: 12px;
+	line-height: 1.55;
+	overflow-wrap: anywhere;
+}
+
+.evidence__sources li {
+	margin-bottom: 6px;
+}
+
+.evidence__sources a {
+	color: var(--deepsy-cyan-dark);
+}
+
+.evidence__sources a:focus-visible {
+	outline: 3px solid #ffe08a;
+	outline-offset: 2px;
+}
+
 .closing-note {
 	margin: 0 0 58px;
 	color: rgba(255, 255, 255, 0.75);
@@ -516,6 +660,11 @@ body {
 
 	.note-card {
 		padding: 24px 20px;
+	}
+
+	.evidence {
+		margin-top: 32px;
+		padding: 18px 16px 14px;
 	}
 
 	.variant-switch button {
