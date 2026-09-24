@@ -71,11 +71,8 @@ const forbidden = [
 	],
 ];
 
-// Seznam zdrojů doporučení se kontroluje zvlášť níže: DOI obsahují dlouhé řady
-// číslic, které by vzor telefonního čísla chybně zachytil.
-const withoutSourceList = html.replace(/<ol class="evidence__sources">[\s\S]*?<\/ol>/, " ");
 for (const [pattern, label] of forbidden) {
-	assert.doesNotMatch(stripMarkup(withoutSourceList), pattern, `Nalezeno: ${label}`);
+	assert.doesNotMatch(stripMarkup(html), pattern, `Nalezeno: ${label}`);
 }
 
 // Stránka nic nenačítá z cizích serverů. Jediné povolené adresy jsou odkazy na
@@ -197,38 +194,55 @@ for (const [format, headings] of Object.entries(variantFormats)) {
 	}
 }
 
-// Doporučení založená na důkazech: jeden blok pod zápisem pro DeePsy, DAP a SIRP.
-const evidenceMatch = html.match(/<section class="evidence" id="evidence" data-evidence-for="([^"]+)"[^>]*>([\s\S]*?)\n\t\t\t<\/section>/);
+// Doporučení založená na důkazech: jeden sbalený blok pod zápisem pro DeePsy,
+// DAP a SIRP. Uvnitř jen odrážky s citacemi v textu, věta k přístupu terapeuta
+// a limity; žádný úvod, zdůvodnění, metadata ani seznam zdrojů.
+const evidenceMatch = html.match(/<details class="evidence" id="evidence" data-evidence-for="([^"]+)"([^>]*)>([\s\S]*?)\n\t\t\t<\/details>/);
 assert.ok(evidenceMatch, "Blok doporučení nebyl nalezen");
 assert.deepEqual(evidenceMatch[1].split(" "), ["deepsy", "dap", "sirp"], "Doporučení patří k DeePsy, DAP a SIRP, ne k dekurzu");
-const evidenceHtml = evidenceMatch[2];
-assert.match(evidenceHtml, /<h3 id="evidence-title">Doporučení založená na důkazech<\/h3>/);
-assert.match(evidenceHtml, /Modalita terapeuta v ukázce:/, "Blok má říct, pro jakou modalitu doporučení vznikla");
+assert.doesNotMatch(evidenceMatch[2], /\bopen\b/, "Blok doporučení má být ve výchozím stavu sbalený");
+const evidenceHtml = evidenceMatch[3];
+assert.match(evidenceHtml, /<summary>Doporučení založená na důkazech<\/summary>/);
 assert.ok(html.indexOf('class="evidence"') > html.indexOf('id="panel-sirp"'), "Blok doporučení patří pod zápisy");
 assert.ok(html.indexOf('class="evidence"') < html.indexOf('class="source-notice'), "Blok doporučení patří do karty zápisu");
+assert.doesNotMatch(evidenceHtml, /<ol|evidence__sources|evidence__lead|evidence__meta|evidence__kicker|<h3/, "V bloku není seznam zdrojů, úvod ani metadata");
 
-const sourceItems = Array.from(
-	(evidenceHtml.match(/<ol class="evidence__sources">([\s\S]*?)<\/ol>/) || ["", ""])[1].matchAll(/<li>([\s\S]*?)<\/li>/g),
-	(match) => match[1],
-);
-assert.ok(sourceItems.length >= 2, "Doporučení mají citovat aspoň dva zdroje");
-for (const item of sourceItems) {
-	assert.equal((item.match(citationLink) || []).length, 1, `Zdroj nemá právě jeden odkaz na DOI nebo PubMed: ${stripMarkup(item)}`);
-}
-const citedNumbers = Array.from(evidenceHtml.matchAll(/<span class="evidence__refs">\[([\d, ]+)\]<\/span>/g))
-	.flatMap((match) => match[1].split(",").map((n) => Number(n.trim())));
-assert.ok(citedNumbers.length > 0, "Odrážky doporučení mají odkazovat na zdroje");
-for (const n of citedNumbers) {
-	assert.ok(n >= 1 && n <= sourceItems.length, `Odkaz [${n}] nemá zdroj v seznamu`);
-}
-for (let n = 1; n <= sourceItems.length; n += 1) {
-	assert.ok(citedNumbers.includes(n), `Zdroj ${n} není nikde citován`);
-}
+const evidenceText = stripMarkup(evidenceHtml.replace(/<span class="evidence__scale"[\s\S]*?<\/span><\/span>/g, "</span>"));
+assert.doesNotMatch(evidenceText, /Podklad pro klinický úsudek|Modalita terapeuta v ukázce|glm|deepseek|kimi/i, "V bloku nemají být poučky ani metadata");
+assert.doesNotMatch(evidenceText, /měl[a]?\s+byste|měl\/a byste|doporučujeme|musíte/i, "Doporučení nemají terapeutovi přikazovat");
+// Slovník aplikace: odborný žargon a doslovné překlady nemají v doporučeních co dělat.
 assert.doesNotMatch(
-	stripMarkup(evidenceHtml),
-	/měl[a]?\s+byste|měl\/a byste|doporučujeme|musíte/i,
-	"Doporučení nemají terapeutovi přikazovat",
+	evidenceText,
+	/anticipačn|habituac|expozic|ruminac|zážitkov\S* vyhýbání|akceptačně|acceptance|mindfulness|metaanalýza ukazuje|\bRCT\b/i,
+	"Doporučení mají být psaná obyčejnou češtinou (viz slovník)",
 );
+
+const problems = Array.from(evidenceHtml.matchAll(/<div class="evidence__problem">([\s\S]*?)\n\t\t\t\t\t<\/div>/g), (match) => match[1]);
+assert.ok(problems.length >= 1, "Blok doporučení nemá žádné téma");
+for (const problem of problems) {
+	assert.match(problem, /<span class="evidence__level evidence__level--[a-z]+" tabindex="0">/, "Téma má štítek síly dokladů");
+	assert.equal((problem.match(/<span class="evidence__scale" role="tooltip">/g) || []).length, 1, "Štítek má vysvětlit stupnici");
+	assert.equal((problem.match(/aria-current="true"/g) || []).length, 1, "Stupnice vyznačí právě aktuální úroveň");
+	assert.match(problem, /<strong>Pro váš přístup:<\/strong>/);
+	assert.match(problem, /<strong>Limity výzkumu:<\/strong>/);
+
+	const bullets = Array.from(problem.matchAll(/<li>([\s\S]*?)<\/li>/g), (match) => match[1]);
+	assert.ok(bullets.length >= 1 && bullets.length <= 4, `Téma má ${bullets.length} odrážek; očekáváno 1–4`);
+	for (const bullet of bullets) {
+		const cite = bullet.match(/ <span class="evidence__cite">\(([\s\S]*?)\)<\/span>$/);
+		assert.ok(cite, `Odrážka nemá citaci na konci: ${stripMarkup(bullet)}`);
+		const links = Array.from(cite[1].matchAll(/<a [^>]*>[^<]*<\/a>/g), (match) => match[0]);
+		assert.ok(links.length >= 1, `Odrážka nemá odkazovanou citaci: ${stripMarkup(bullet)}`);
+		assert.equal(cite[1].replace(/<a [^>]*>[^<]*<\/a>/g, "").replace(/; /g, ""), "", `Citace mají být jen odkazy oddělené středníkem: ${cite[1]}`);
+		for (const link of links) {
+			assert.match(link, new RegExp(`^${citationLink.source}[^<]+<\\/a>$`), `Citace není odkaz na DOI nebo PubMed: ${link}`);
+			const label = link.replace(/<[^>]+>/g, "").replace(/&amp;/g, "&");
+			assert.match(label, /^[\p{L}' -]+(?: & [\p{L}' -]+| et al\.)?, (?:\d{4}|b\.r\.)$/u, `Citace není ve tvaru APA: ${label}`);
+		}
+		const words = countWords(stripMarkup(bullet.slice(0, cite.index)));
+		assert.ok(words <= 35, `Odrážka má ${words} slov; maximum je 35: ${stripMarkup(bullet)}`);
+	}
+}
 
 // Poznámka pro tým je sbalená a nese důvody výběru formátů.
 const rationale = html.match(/<details class="format-rationale">([\s\S]*?)<\/details>/);

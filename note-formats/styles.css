@@ -407,12 +407,11 @@ body {
 	line-height: 1.78;
 }
 
-/* Doporučení založená na důkazech: pod zápisem, oddělená od něj,
-   protože nejsou záznamem sezení, ale podkladem z výzkumu. */
+/* Doporučení založená na důkazech: sbalený blok pod zápisem, oddělený od něj,
+   protože nejde o záznam sezení, ale o podklad z výzkumu. */
 .evidence {
 	max-width: 790px;
 	margin-top: 44px;
-	padding: 24px 26px 20px;
 	background: var(--deepsy-soft);
 	border: 1px solid var(--deepsy-line);
 	border-left: 4px solid var(--deepsy-cyan);
@@ -422,42 +421,59 @@ body {
 	display: none;
 }
 
-.evidence__kicker {
-	margin: 0 0 3px;
-	color: var(--deepsy-cyan-dark);
-	font-size: 12px;
-	font-weight: 700;
-	letter-spacing: 0.07em;
-	text-transform: uppercase;
-}
-
-.evidence h3 {
-	margin: 0 0 8px;
+.evidence > summary {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 16px 22px;
 	color: var(--deepsy-deep);
-	font-size: 17px;
+	font-size: 15px;
 	font-weight: 700;
 	letter-spacing: 0.03em;
 	text-transform: uppercase;
+	cursor: pointer;
+	list-style: none;
 }
 
-.evidence__lead,
-.evidence__meta {
-	margin: 0 0 6px;
-	color: var(--deepsy-muted);
-	font-size: 13px;
+.evidence > summary::-webkit-details-marker {
+	display: none;
 }
 
-.evidence__meta {
-	margin-bottom: 22px;
+.evidence > summary::before {
+	content: "";
+	width: 8px;
+	height: 8px;
+	border-right: 2px solid var(--deepsy-cyan-dark);
+	border-bottom: 2px solid var(--deepsy-cyan-dark);
+	transform: rotate(-45deg);
+	transition: transform 160ms ease;
+}
+
+.evidence[open] > summary::before {
+	transform: rotate(45deg);
+}
+
+.evidence > summary:hover {
+	background: rgba(0, 183, 214, 0.08);
+}
+
+.evidence > summary:focus-visible {
+	outline: 3px solid #ffe08a;
+	outline-offset: 2px;
+}
+
+.evidence__body {
+	padding: 4px 26px 20px;
 }
 
 .evidence__problem + .evidence__problem {
-	margin-top: 26px;
-	padding-top: 20px;
+	margin-top: 22px;
+	padding-top: 18px;
 	border-top: 1px solid var(--deepsy-line);
 }
 
 .evidence h4 {
+	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
@@ -468,6 +484,9 @@ body {
 	font-weight: 700;
 }
 
+/* Štítek síly dokladů; po najetí myší nebo po klepnutí ukáže celou stupnici.
+   Stupnice se ukotví k nadpisu tématu, ne ke štítku, aby na úzké obrazovce
+   nevyjela mimo blok, když štítek stojí na konci řádku. */
 .evidence__level {
 	padding: 1px 8px;
 	border: 1px solid currentColor;
@@ -476,6 +495,7 @@ body {
 	letter-spacing: 0.04em;
 	text-transform: uppercase;
 	white-space: nowrap;
+	cursor: help;
 }
 
 .evidence__level--strong,
@@ -489,9 +509,51 @@ body {
 	color: var(--deepsy-muted);
 }
 
+.evidence__level:focus-visible {
+	outline: 3px solid #ffe08a;
+	outline-offset: 2px;
+}
+
+.evidence__scale {
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	z-index: 5;
+	display: none;
+	width: min(360px, 100%);
+	margin: 0;
+	padding: 12px 14px;
+	background: var(--deepsy-deep);
+	color: var(--deepsy-white);
+	font-size: 12px;
+	font-weight: 300;
+	letter-spacing: 0;
+	line-height: 1.5;
+	text-transform: none;
+	white-space: normal;
+	box-shadow: 0 8px 24px rgba(0, 22, 27, 0.3);
+}
+
+.evidence__level:hover .evidence__scale,
+.evidence__level:focus .evidence__scale {
+	display: block;
+}
+
+.evidence__scale > span {
+	display: block;
+	margin: 0 0 4px;
+}
+
+.evidence__scale strong {
+	font-weight: 700;
+}
+
+.evidence__scale [aria-current="true"] {
+	color: #ffe08a;
+}
+
 .evidence p,
-.evidence ul,
-.evidence ol {
+.evidence ul {
 	margin: 0 0 10px;
 }
 
@@ -508,11 +570,14 @@ body {
 	color: var(--deepsy-cyan-dark);
 }
 
-.evidence__refs {
+.evidence__cite a {
 	color: var(--deepsy-cyan-dark);
-	font-size: 12px;
-	font-weight: 600;
 	white-space: nowrap;
+}
+
+.evidence__cite a:focus-visible {
+	outline: 3px solid #ffe08a;
+	outline-offset: 2px;
 }
 
 .evidence__note,
@@ -522,33 +587,6 @@ body {
 
 .evidence__limits {
 	color: var(--deepsy-muted);
-}
-
-.evidence__sources-title {
-	margin-top: 26px;
-	padding-top: 16px;
-	border-top: 1px solid var(--deepsy-line);
-}
-
-.evidence__sources {
-	padding-left: 22px;
-	color: var(--deepsy-muted);
-	font-size: 12px;
-	line-height: 1.55;
-	overflow-wrap: anywhere;
-}
-
-.evidence__sources li {
-	margin-bottom: 6px;
-}
-
-.evidence__sources a {
-	color: var(--deepsy-cyan-dark);
-}
-
-.evidence__sources a:focus-visible {
-	outline: 3px solid #ffe08a;
-	outline-offset: 2px;
 }
 
 .closing-note {
@@ -664,7 +702,14 @@ body {
 
 	.evidence {
 		margin-top: 32px;
-		padding: 18px 16px 14px;
+	}
+
+	.evidence > summary {
+		padding: 14px 16px;
+	}
+
+	.evidence__body {
+		padding: 4px 16px 14px;
 	}
 
 	.variant-switch button {
