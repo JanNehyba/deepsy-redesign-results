@@ -194,18 +194,19 @@ for (const [format, headings] of Object.entries(variantFormats)) {
 	}
 }
 
-// Doporučení založená na důkazech: plný sbalený blok pod zápisem DeePsy. Uvnitř
-// jen odrážky s citacemi v textu, věta k přístupu terapeuta a limity; žádný úvod,
-// zdůvodnění, metadata ani seznam zdrojů. DAP a SIRP mají zkrácenou podobu níže.
-const evidenceMatch = html.match(/<details class="evidence" id="evidence" data-evidence-for="([^"]+)"([^>]*)>([\s\S]*?)\n\t\t\t<\/details>/);
+// Doporučení založená na důkazech: plná podoba jako běžná otevřená sekce pod
+// zápisem DeePsy. Uvnitř jen odrážky s citacemi v textu, věta k přístupu
+// terapeuta a limity; žádný úvod, zdůvodnění, metadata ani seznam zdrojů.
+// DAP a SIRP mají zkrácenou podobu níže.
+const evidenceMatch = html.match(/<section class="note-section evidence" id="evidence" data-evidence-for="([^"]+)">([\s\S]*?)\n\t\t\t<\/section>/);
 assert.ok(evidenceMatch, "Blok doporučení nebyl nalezen");
 assert.deepEqual(evidenceMatch[1].split(" "), ["deepsy"], "Plná doporučení patří jen k zápisu DeePsy");
-assert.doesNotMatch(evidenceMatch[2], /\bopen\b/, "Blok doporučení má být ve výchozím stavu sbalený");
-const evidenceHtml = evidenceMatch[3];
-assert.match(evidenceHtml, /<summary>Doporučení založená na důkazech<\/summary>/);
-assert.ok(html.indexOf('class="evidence"') > html.indexOf('id="panel-sirp"'), "Blok doporučení patří pod zápisy");
-assert.ok(html.indexOf('class="evidence"') < html.indexOf('class="source-notice'), "Blok doporučení patří do karty zápisu");
-assert.doesNotMatch(evidenceHtml, /<ol|evidence__sources|evidence__lead|evidence__meta|evidence__kicker|<h3/, "V bloku není seznam zdrojů, úvod ani metadata");
+const evidenceHtml = evidenceMatch[2];
+assert.match(evidenceHtml, /^\n\t\t\t\t<h3>Doporučení založená na důkazech<\/h3>\n/, "Sekce doporučení začíná nadpisem jako ostatní sekce");
+assert.equal((evidenceHtml.match(/<h3/g) || []).length, 1, "Sekce doporučení má jediný nadpis h3");
+assert.ok(html.indexOf('id="evidence"') > html.indexOf('id="panel-sirp"'), "Blok doporučení patří pod zápisy");
+assert.ok(html.indexOf('id="evidence"') < html.indexOf('class="source-notice'), "Blok doporučení patří do karty zápisu");
+assert.doesNotMatch(evidenceHtml, /<ol|evidence__sources|evidence__lead|evidence__meta|evidence__kicker/, "V bloku není seznam zdrojů, úvod ani metadata");
 
 const evidenceText = stripMarkup(evidenceHtml.replace(/<span class="evidence__scale"[\s\S]*?<\/span><\/span>/g, "</span>"));
 assert.doesNotMatch(evidenceText, /Podklad pro klinický úsudek|Modalita terapeuta v ukázce|glm|deepseek|kimi/i, "V bloku nemají být poučky ani metadata");
@@ -217,7 +218,7 @@ assert.doesNotMatch(
 	"Doporučení mají být psaná obyčejnou češtinou (viz slovník)",
 );
 
-const problems = Array.from(evidenceHtml.matchAll(/<div class="evidence__problem">([\s\S]*?)\n\t\t\t\t\t<\/div>/g), (match) => match[1]);
+const problems = Array.from(evidenceHtml.matchAll(/<div class="evidence__problem">([\s\S]*?)\n\t\t\t\t<\/div>/g), (match) => match[1]);
 assert.ok(problems.length >= 1, "Blok doporučení nemá žádné téma");
 for (const problem of problems) {
 	assert.match(problem, /<span class="evidence__level evidence__level--[a-z]+" tabindex="0">/, "Téma má štítek síly dokladů");
@@ -244,15 +245,37 @@ for (const problem of problems) {
 	}
 }
 
-// Zkrácená podoba u DAP a SIRP: vidět hned, jen nadpis a nejvýš tři odrážky
-// vybrané z plné verze (EvidenceGenerator::briefBullets() v aplikaci). Text
-// i citace odrážky musí v plném bloku stát doslova, před nimi název tématu.
-const briefMatch = html.match(/<section class="evidence evidence--brief" id="evidence-brief" data-evidence-for="([^"]+)"[^>]*>([\s\S]*?)\n\t\t\t<\/section>/);
+// Zkrácená podoba u DAP a SIRP: běžná sekce pod Plánem, jen nadpis a nejvýš tři
+// odrážky vybrané z plné verze (EvidenceGenerator::briefBullets() v aplikaci).
+// Text i citace odrážky musí v plném bloku stát doslova, před nimi název tématu.
+const briefMatch = html.match(/<section class="note-section evidence evidence--brief" id="evidence-brief" data-evidence-for="([^"]+)"[^>]*>([\s\S]*?)\n\t\t\t<\/section>/);
 assert.ok(briefMatch, "Zkrácený blok doporučení nebyl nalezen");
 assert.deepEqual(briefMatch[1].split(" "), ["dap", "sirp"], "Zkrácená doporučení patří k DAP a SIRP");
 const briefHtml = briefMatch[2];
-assert.doesNotMatch(briefHtml, /<details|<summary/, "Zkrácená podoba má být vidět hned, bez rozbalování");
-assert.match(briefHtml, /<h3>Doporučení založená na důkazech<\/h3>/);
+assert.match(briefHtml, /^\n\t\t\t\t<h3>Doporučení založená na důkazech<\/h3>\n/, "Zkrácená sekce začíná nadpisem jako ostatní sekce");
+
+// Pro rozhovory s terapeuty vypadají doporučení stejně jako ostatní sekce:
+// žádný rámeček, pozadí, sbalení ani zmenšené či zašedlé písmo. Co zvýraznit
+// a co potlačit, mají říct terapeuti sami. Výjimkou je jen štítek síly dokladů
+// s tooltipem a odkazy citací.
+for (const [label, block] of [["plná", evidenceHtml], ["zkrácená", briefHtml]]) {
+	assert.doesNotMatch(block, /<details|<summary/, `Doporučení (${label} podoba) nemají být sbalená`);
+}
+const cssRules = Array.from(
+	css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/@media[^{]+\{/g, "").matchAll(/([^{}]+)\{([^}]*)\}/g),
+	(match) => [match[1].trim(), match[2]],
+);
+const evidenceRules = cssRules.filter(([selector]) => /\.evidence(?!__(?:level|scale|cite))/.test(selector));
+assert.ok(evidenceRules.some(([selector]) => selector === ".evidence"), "Pravidlo .evidence nebylo nalezeno");
+for (const [selector, body] of evidenceRules) {
+	assert.doesNotMatch(
+		body,
+		/background|border|box-shadow|padding|font-size|color|letter-spacing|text-transform/,
+		`${selector} vizuálně odlišuje doporučení od ostatních sekcí`,
+	);
+}
+const marginTop = (selector) => cssRules.find(([candidate]) => candidate === selector)?.[1].match(/margin-top:\s*([^;]+);/)?.[1];
+assert.equal(marginTop(".evidence"), marginTop(".note-section + .note-section"), "Mezera nad doporučeními je stejná jako mezi sekcemi");
 assert.doesNotMatch(
 	briefHtml,
 	/evidence__level|evidence__scale|S opatrností|Pro váš přístup|Limity výzkumu/,
