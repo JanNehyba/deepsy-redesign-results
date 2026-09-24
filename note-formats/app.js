@@ -5,9 +5,9 @@
 	const panels = Array.from(document.querySelectorAll("[role='tabpanel'][data-panel]"));
 	const formats = new Set(tabs.map((tab) => tab.dataset.format));
 	const switches = new Map();
-	// Recommendations belong to DeePsy, DAP and SIRP; the dekurz stays a bare record.
-	const evidence = document.querySelector("[data-evidence-for]");
-	const evidenceFormats = evidence ? evidence.dataset.evidenceFor.split(" ") : [];
+	// Recommendations: the full, collapsed block belongs to DeePsy, the three-bullet
+	// short form to DAP and SIRP; the dekurz stays a bare record.
+	const evidenceBlocks = Array.from(document.querySelectorAll("[data-evidence-for]"));
 
 	document.querySelectorAll("[data-variant-switch]").forEach((group) => {
 		const format = group.dataset.variantSwitch;
@@ -70,9 +70,9 @@
 			panel.hidden = panel.dataset.panel !== format;
 		});
 
-		if (evidence) {
-			evidence.hidden = !evidenceFormats.includes(format);
-		}
+		evidenceBlocks.forEach((block) => {
+			block.hidden = !block.dataset.evidenceFor.split(" ").includes(format);
+		});
 
 		if (updateHash) {
 			history.replaceState(null, "", "#" + hashFor(format));

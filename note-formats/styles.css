@@ -466,6 +466,24 @@ body {
 	padding: 4px 26px 20px;
 }
 
+/* Zkrácená podoba u DAP a SIRP: vidět hned, jen nadpis a tři odrážky. */
+.evidence--brief {
+	padding: 16px 26px 12px;
+}
+
+.evidence--brief h3 {
+	margin: 0 0 10px;
+	color: var(--deepsy-deep);
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+}
+
+.evidence--brief li strong {
+	font-weight: 700;
+}
+
 .evidence__problem + .evidence__problem {
 	margin-top: 22px;
 	padding-top: 18px;
@@ -710,6 +728,10 @@ body {
 
 	.evidence__body {
 		padding: 4px 16px 14px;
+	}
+
+	.evidence--brief {
+		padding: 14px 16px 10px;
 	}
 
 	.variant-switch button {

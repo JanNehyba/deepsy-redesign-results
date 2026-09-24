@@ -194,12 +194,12 @@ for (const [format, headings] of Object.entries(variantFormats)) {
 	}
 }
 
-// Doporučení založená na důkazech: jeden sbalený blok pod zápisem pro DeePsy,
-// DAP a SIRP. Uvnitř jen odrážky s citacemi v textu, věta k přístupu terapeuta
-// a limity; žádný úvod, zdůvodnění, metadata ani seznam zdrojů.
+// Doporučení založená na důkazech: plný sbalený blok pod zápisem DeePsy. Uvnitř
+// jen odrážky s citacemi v textu, věta k přístupu terapeuta a limity; žádný úvod,
+// zdůvodnění, metadata ani seznam zdrojů. DAP a SIRP mají zkrácenou podobu níže.
 const evidenceMatch = html.match(/<details class="evidence" id="evidence" data-evidence-for="([^"]+)"([^>]*)>([\s\S]*?)\n\t\t\t<\/details>/);
 assert.ok(evidenceMatch, "Blok doporučení nebyl nalezen");
-assert.deepEqual(evidenceMatch[1].split(" "), ["deepsy", "dap", "sirp"], "Doporučení patří k DeePsy, DAP a SIRP, ne k dekurzu");
+assert.deepEqual(evidenceMatch[1].split(" "), ["deepsy"], "Plná doporučení patří jen k zápisu DeePsy");
 assert.doesNotMatch(evidenceMatch[2], /\bopen\b/, "Blok doporučení má být ve výchozím stavu sbalený");
 const evidenceHtml = evidenceMatch[3];
 assert.match(evidenceHtml, /<summary>Doporučení založená na důkazech<\/summary>/);
@@ -244,10 +244,35 @@ for (const problem of problems) {
 	}
 }
 
+// Zkrácená podoba u DAP a SIRP: vidět hned, jen nadpis a nejvýš tři odrážky
+// vybrané z plné verze (EvidenceGenerator::briefBullets() v aplikaci). Text
+// i citace odrážky musí v plném bloku stát doslova, před nimi název tématu.
+const briefMatch = html.match(/<section class="evidence evidence--brief" id="evidence-brief" data-evidence-for="([^"]+)"[^>]*>([\s\S]*?)\n\t\t\t<\/section>/);
+assert.ok(briefMatch, "Zkrácený blok doporučení nebyl nalezen");
+assert.deepEqual(briefMatch[1].split(" "), ["dap", "sirp"], "Zkrácená doporučení patří k DAP a SIRP");
+const briefHtml = briefMatch[2];
+assert.doesNotMatch(briefHtml, /<details|<summary/, "Zkrácená podoba má být vidět hned, bez rozbalování");
+assert.match(briefHtml, /<h3>Doporučení založená na důkazech<\/h3>/);
+assert.doesNotMatch(
+	briefHtml,
+	/evidence__level|evidence__scale|S opatrností|Pro váš přístup|Limity výzkumu/,
+	"Zkrácená podoba nemá štítky, „S opatrností“, přístup ani limity",
+);
+const topicLabels = Array.from(evidenceHtml.matchAll(/<h4>([^<]+?) <span class="evidence__level/g), (match) => match[1]);
+const fullBullets = Array.from(evidenceHtml.matchAll(/<li>([\s\S]*?)<\/li>/g), (match) => match[1]).filter((b) => !b.startsWith("<strong>S opatrností:"));
+const briefBullets = Array.from(briefHtml.matchAll(/<li>([\s\S]*?)<\/li>/g), (match) => match[1]);
+assert.equal(briefBullets.length, Math.min(3, fullBullets.length), `Zkrácená podoba má ${briefBullets.length} odrážek; očekávány 3 (nebo všechny, když jich plná verze má méně)`);
+for (const bullet of briefBullets) {
+	const parts = bullet.match(/^<strong>([^<]+):<\/strong> ([\s\S]+)$/);
+	assert.ok(parts, `Odrážka zkrácené podoby nemá tvar „Téma: text (citace)“: ${stripMarkup(bullet)}`);
+	assert.ok(topicLabels.includes(parts[1]), `Téma „${parts[1]}“ není mezi tématy plné verze`);
+	assert.ok(fullBullets.includes(parts[2]), `Odrážka se v plné verzi nevyskytuje doslova: ${stripMarkup(parts[2])}`);
+}
+
 // Poznámka pro tým je sbalená a nese důvody výběru formátů.
 const rationale = html.match(/<details class="format-rationale">([\s\S]*?)<\/details>/);
 assert.ok(rationale, "Poznámka k výběru formátů nebyla nalezena");
-assert.doesNotMatch(rationale[1], /open/, "Poznámka má být ve výchozím stavu sbalená");
+assert.doesNotMatch(rationale[1], /\bopen\b/, "Poznámka má být ve výchozím stavu sbalená");
 assert.ok(html.indexOf('class="format-rationale"') > html.indexOf('class="closing-note"'), "Poznámka patří až úplně dolů");
 for (const term of ["BIRP", "GIRP", "PIRP", "léčebného plánu", "neverbálního"]) {
 	assert.ok(rationale[1].includes(term), `Poznámka má vysvětlit: ${term}`);
