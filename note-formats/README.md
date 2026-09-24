@@ -11,20 +11,25 @@ videa ani jejich unikátní sled událostí. Změněny byly identifikační,
 biografické, situační i další klinicky nepodstatné detaily.
 
 Sekce „Klinické hypotézy" v plném zápisu DeePsy je doslovný výstup modelu
-`deepseek-v4-flash` nad revidovaným promptem, ne ručně psaná ilustrace. Vstupem
+`deepseek` (alias e-infra) nad revidovaným promptem, ne ručně psaná ilustrace. Vstupem
 byl fiktivní přepis složený k tomuto případu; přepis sám se nezveřejňuje.
 Ostatní sekce zůstávají ručně psané.
 
-Sbalený blok „Doporučení založená na důkazech“ pod zápisy DeePsy, DAP a SIRP je
-doslovný výstup DeePsy nad stejným fiktivním přepisem:
+Sbalený blok „Doporučení založená na důkazech“ pod zápisem DeePsy je doslovný
+výstup DeePsy nad stejným fiktivním přepisem:
 - vznikl příkazem `php spark generate:evidence --transcript-file … --modality
   "Psychodynamická psychoterapie"` 24. 9. 2026;
-- český text psal `deepseek` (u jedné fáze záložně `kimi`), vyhledávání a čtení abstraktů `deepseek-v4-flash`;
+- celý běžel na modelu `deepseek` (alias e-infra), u jedné fáze záložně `kimi`;
 - do HTML je jen převedený, nic se nepřepisovalo;
 - všechny citované články jsou skutečné a ověřené proti Crossref nebo PubMed.
 
+U DAP a SIRP je místo něj zkrácená podoba, vidět hned bez rozbalování: tři odrážky
+vybrané z plné verze stejným pravidlem jako v aplikaci (`EvidenceGenerator::briefBullets()`,
+témata podle síly dokladů, z každého nejdřív první odrážka), s doslovným textem a citacemi.
+Dekurz doporučení nemá.
+
 Modalita je záměrně jiná než kognitivně-behaviorální, aby bylo vidět, jak doporučení
-pracují s evidencí z jiného přístupu. Tvar bloku odpovídá kartě v aplikaci:
+pracují s evidencí z jiného přístupu. Tvar plného bloku odpovídá kartě v aplikaci:
 - jen odrážky s citacemi APA, které vedou přímo na článek;
 - věta k přístupu terapeuta a limity výzkumu;
 - štítek síly dokladů s tooltipem, který vysvětluje stupnici;
