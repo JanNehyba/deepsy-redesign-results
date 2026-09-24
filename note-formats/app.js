@@ -5,8 +5,8 @@
 	const panels = Array.from(document.querySelectorAll("[role='tabpanel'][data-panel]"));
 	const formats = new Set(tabs.map((tab) => tab.dataset.format));
 	const switches = new Map();
-	// Recommendations: the full, collapsed block belongs to DeePsy, the three-bullet
-	// short form to DAP and SIRP; the dekurz stays a bare record.
+	// Recommendations: the full section belongs to DeePsy, the three-bullet short
+	// form to DAP and SIRP; the dekurz stays a bare record.
 	const evidenceBlocks = Array.from(document.querySelectorAll("[data-evidence-for]"));
 
 	document.querySelectorAll("[data-variant-switch]").forEach((group) => {

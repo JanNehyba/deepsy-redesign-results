@@ -407,99 +407,31 @@ body {
 	line-height: 1.78;
 }
 
-/* Doporučení založená na důkazech: sbalený blok pod zápisem, oddělený od něj,
-   protože nejde o záznam sezení, ale o podklad z výzkumu. */
+/* Doporučení založená na důkazech vypadají jako každá jiná sekce zápisu:
+   bez rámečku, bez sbalení, stejný nadpis i písmo (pravidla .note-section).
+   V rozhovorech s terapeuty nic vizuálně nezvýrazňujeme ani neschováváme,
+   co je důležité, mají určit oni. U DAP a SIRP jen tři odrážky. */
 .evidence {
 	max-width: 790px;
-	margin-top: 44px;
-	background: var(--deepsy-soft);
-	border: 1px solid var(--deepsy-line);
-	border-left: 4px solid var(--deepsy-cyan);
+	margin-top: 34px;
 }
 
 .evidence[hidden] {
 	display: none;
 }
 
-.evidence > summary {
-	display: flex;
-	align-items: center;
-	gap: 10px;
-	padding: 16px 22px;
-	color: var(--deepsy-deep);
-	font-size: 15px;
-	font-weight: 700;
-	letter-spacing: 0.03em;
-	text-transform: uppercase;
-	cursor: pointer;
-	list-style: none;
-}
-
-.evidence > summary::-webkit-details-marker {
-	display: none;
-}
-
-.evidence > summary::before {
-	content: "";
-	width: 8px;
-	height: 8px;
-	border-right: 2px solid var(--deepsy-cyan-dark);
-	border-bottom: 2px solid var(--deepsy-cyan-dark);
-	transform: rotate(-45deg);
-	transition: transform 160ms ease;
-}
-
-.evidence[open] > summary::before {
-	transform: rotate(45deg);
-}
-
-.evidence > summary:hover {
-	background: rgba(0, 183, 214, 0.08);
-}
-
-.evidence > summary:focus-visible {
-	outline: 3px solid #ffe08a;
-	outline-offset: 2px;
-}
-
-.evidence__body {
-	padding: 4px 26px 20px;
-}
-
-/* Zkrácená podoba u DAP a SIRP: vidět hned, jen nadpis a tři odrážky. */
-.evidence--brief {
-	padding: 16px 26px 12px;
-}
-
-.evidence--brief h3 {
-	margin: 0 0 10px;
-	color: var(--deepsy-deep);
-	font-size: 15px;
-	font-weight: 700;
-	letter-spacing: 0.03em;
-	text-transform: uppercase;
-}
-
 .evidence--brief li strong {
 	font-weight: 700;
 }
 
-.evidence__problem + .evidence__problem {
-	margin-top: 22px;
-	padding-top: 18px;
-	border-top: 1px solid var(--deepsy-line);
-}
-
+/* Nadpis tématu nese i štítek síly dokladů, proto flex; okraje a písmo
+   přebírá z .note-section h4. */
 .evidence h4 {
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
 	gap: 6px 12px;
-	margin: 0 0 8px;
-	color: var(--deepsy-ink);
-	font-size: 15px;
-	font-weight: 700;
 }
 
 /* Štítek síly dokladů; po najetí myší nebo po klepnutí ukáže celou stupnici.
@@ -570,24 +502,6 @@ body {
 	color: #ffe08a;
 }
 
-.evidence p,
-.evidence ul {
-	margin: 0 0 10px;
-}
-
-.evidence ul {
-	padding-left: 22px;
-}
-
-.evidence li {
-	padding-left: 4px;
-	margin-bottom: 5px;
-}
-
-.evidence li::marker {
-	color: var(--deepsy-cyan-dark);
-}
-
 .evidence__cite a {
 	color: var(--deepsy-cyan-dark);
 	white-space: nowrap;
@@ -596,15 +510,6 @@ body {
 .evidence__cite a:focus-visible {
 	outline: 3px solid #ffe08a;
 	outline-offset: 2px;
-}
-
-.evidence__note,
-.evidence__limits {
-	font-size: 13px;
-}
-
-.evidence__limits {
-	color: var(--deepsy-muted);
 }
 
 .closing-note {
@@ -716,22 +621,6 @@ body {
 
 	.note-card {
 		padding: 24px 20px;
-	}
-
-	.evidence {
-		margin-top: 32px;
-	}
-
-	.evidence > summary {
-		padding: 14px 16px;
-	}
-
-	.evidence__body {
-		padding: 4px 16px 14px;
-	}
-
-	.evidence--brief {
-		padding: 14px 16px 10px;
 	}
 
 	.variant-switch button {
